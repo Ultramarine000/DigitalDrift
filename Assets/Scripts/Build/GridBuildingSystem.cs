@@ -16,28 +16,32 @@ public class GridBuildingSystem : MonoBehaviour
     public Transform gridXZStartPos;
     public List<Button> SelectButtons;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
+    [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList2;
     private PlacedObjectTypeSO placedObjectTypeSO;
+    private PlacedObjectTypeSO placedObjectTypeSO2;
     private GridXY<GridObject> gridXY;
     private GridXZ<GridObject> gridXZ;
     private PlacedObjectTypeSO.Dir dir = PlacedObjectTypeSO.Dir.Down;
     //private Vector3 startPos = new Vector3();
     public GameObject labelParent;
 
-    [Header("预载组")]
-    public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
+    //[Header("预载组")]
+    //public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
     private void Awake()
     {
         Instance = this;
 
-        int gridWidth = 8;
-        int gridHeight = 9;
-        float cellSize = 1f;
-        gridXY = new GridXY<GridObject>(gridWidth, gridHeight, cellSize, gridXYStartPos.position, (GridXY<GridObject> g, int x, int y) => new GridObject(g, x, y), true);//show debug
-        gridXZ = new GridXZ<GridObject>(gridWidth, gridHeight, cellSize, gridXZStartPos.position, (GridXZ<GridObject> g, int x, int z) => new GridObject(g, x, z), true);//show debug
+        int gridWidth = 20;
+        int gridHeight = 11;
+        float cellSize1 = 1f;
+        float cellSize2 = 5f;
+        gridXY = new GridXY<GridObject>(gridWidth, gridHeight, cellSize1, gridXYStartPos.position, (GridXY<GridObject> g, int x, int y) => new GridObject(g, x, y), true);//show debug
+        gridXZ = new GridXZ<GridObject>(gridWidth, gridHeight, cellSize2, gridXZStartPos.position, (GridXZ<GridObject> g, int x, int z) => new GridObject(g, x, z), true);//show debug
 
         placedObjectTypeSO = placedObjectTypeSOList[0];
+        placedObjectTypeSO2 = placedObjectTypeSOList2[0];
         //Debug.Log(placedObjectTypeSO.name + "1");
-        PreLoadAllObject();
+        //PreLoadAllObject();
     }
     private class GridObject
     {
@@ -45,6 +49,7 @@ public class GridBuildingSystem : MonoBehaviour
         private GridXZ<GridObject> gridXZ;
         private int x, y, z;
         private PlacedObject placedObject;
+        private PlacedObject placedObject22;
         public GridObject(GridXY<GridObject> gridXY, int x, int y)
         {
             this.gridXY = gridXY;
@@ -62,16 +67,31 @@ public class GridBuildingSystem : MonoBehaviour
             this.placedObject = placedObject;
             gridXY.TriggerGridObjectChanged(x, y);
         }
+        public void SetPlacedObject2(PlacedObject placedObject)
+        {
+            this.placedObject22 = placedObject;
+            gridXZ.TriggerGridObjectChanged(x, y);
+        }
 
         public PlacedObject GetPlacedObject()
         {
             return placedObject;
+        }
+        public PlacedObject GetPlacedObject2()
+        {
+            Debug.Log(placedObject22);
+            return placedObject22;
         }
 
         public void ClearPlacedObject()
         {
             placedObject = null;
             gridXY.TriggerGridObjectChanged(x, y);
+        }
+        public void ClearPlacedObject2()
+        {
+            placedObject = null;
+            gridXZ.TriggerGridObjectChanged(x, y);
         }
 
         public bool CanbuildHerb(PlacedObjectTypeSO placedObjectTypeSO)
@@ -144,19 +164,19 @@ public class GridBuildingSystem : MonoBehaviour
             if (canBuild)
             {
                 Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
+                Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
                 //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
                 Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
+                Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
 
                 PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
+                GameObject tempLabel = placedObject.gameObject;
+                PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
 
                 foreach (Vector2Int gridPosition in gridPositionList)
                 {
-                    if (!placedObject.CheckHerb())
-                    {
-                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                        //Debug.Log(gridPosition.x + ", " + gridPosition.y);
-                    }
-                        
+                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                    //Debug.Log(gridPosition.x + ", " + gridPosition.y);
                 }
             }
             else
@@ -169,7 +189,8 @@ public class GridBuildingSystem : MonoBehaviour
         {
             GridObject gridObject = gridXY.GetGridObject(Mouse3D.GetMouseWorldPosition());
             PlacedObject placedObject = gridObject.GetPlacedObject();
-            if (placedObject != null && !placedObject.CheckPreObj())
+
+            if (placedObject != null)
             {
                 placedObject.DestroySelf();
 
@@ -190,20 +211,25 @@ public class GridBuildingSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             placedObjectTypeSO = placedObjectTypeSOList[0];
-            SelectButtons[0].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 0) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
+            placedObjectTypeSO2 = placedObjectTypeSOList2[0];
+            RefreshSelectedObjectType();
+            //SelectButtons[0].GetComponent<Image>().enabled = true;
+            //for (int i = 0; i < SelectButtons.Count; i++)
+            //{
+            //    if (i != 0) SelectButtons[i].GetComponent<Image>().enabled = false;
+            //}
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             placedObjectTypeSO = placedObjectTypeSOList[1];
-            SelectButtons[1].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
+            placedObjectTypeSO2 = placedObjectTypeSOList2[1];
+            RefreshSelectedObjectType();
+            
+            //SelectButtons[1].GetComponent<Image>().enabled = true;
+            //for (int i = 0; i < SelectButtons.Count; i++)
+            //{
+            //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
+            //}
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -260,26 +286,26 @@ public class GridBuildingSystem : MonoBehaviour
             }
         }
     }
-    public void PreLoadAllObject()
-    {
-        //PreLoad preLoadHandler = GetComponent<PreLoad>();
-        foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
-        {
-            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationOffset(dir);
-            foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ)
-            {
-                Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridXY.CellSize;
-                PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
+    //public void PreLoadAllObject()
+    //{
+    //    //PreLoad preLoadHandler = GetComponent<PreLoad>();
+    //    foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
+    //    {
+    //        Vector2Int rotationOffset = placedObjectTypeSO.GetRotationOffset(dir);
+    //        foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ)
+    //        {
+    //            Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridXY.CellSize;
+    //            PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
 
-                List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
-                foreach (Vector2Int gridPosition in gridPositionList)
-                {
-                    if (!placedObject.CheckHerb())
-                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                }
-            }
-        }
-    }
+    //            List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
+    //            foreach (Vector2Int gridPosition in gridPositionList)
+    //            {
+    //                if (!placedObject.CheckHerb())
+    //                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+    //            }
+    //        }
+    //    }
+    //}
 
     public Vector3 GetMouseWorldSnappedPosition()
     {
@@ -312,5 +338,9 @@ public class GridBuildingSystem : MonoBehaviour
     {
         Debug.Log(placedObjectTypeSO.name);
         return placedObjectTypeSO;
+    }
+    private void RefreshSelectedObjectType()
+    {
+        OnSelectedChanged?.Invoke(this, EventArgs.Empty);
     }
 }
