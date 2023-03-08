@@ -576,8 +576,9 @@ MonoBehaviour:
   SelectButtons: []
   placedObjectTypeSOList:
   - {fileID: 11400000, guid: 4a158fe2e29fb8b4f9c081ca60d4a28a, type: 2}
+  placedObjectTypeSOList2:
+  - {fileID: 11400000, guid: 5275f60fd1b0f084eab9ff8d84fbf42b, type: 2}
   labelParent: {fileID: 855242931}
-  preloadObjectTypeSOList: []
 --- !u!4 &1153940379
 Transform:
   m_ObjectHideFlags: 0

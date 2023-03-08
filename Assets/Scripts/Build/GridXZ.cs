@@ -56,7 +56,7 @@ public class GridXZ<TGridObject>
             for (int z = 0; z < GridArray.GetLength(1); z++)
             {
                 DebugTextArray[x, z] = WorldText.CreateWorldText(GridArray[x, z]?.ToString(), null, GetWorldPosition(x, z) + new Vector3(cellSize, 0, cellSize) * 0.5f,
-                 15, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
+                 4, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
                 //Debug.Log(GridArray[x, z].ToString());
                 Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
