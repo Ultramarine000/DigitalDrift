@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a49c775d97432204da7fa48c6049c2f9, type: 3}
-  m_Name: Block0-v
+  m_Name: Block1-XZ
   m_EditorClassIdentifier: 
-  nameString: Block0-v
-  prefab: {fileID: 8800953658359070823, guid: f71c7e1e6323e4742be1d2ddcf35e741, type: 3}
-  visual: {fileID: 8800953658359070823, guid: f71c7e1e6323e4742be1d2ddcf35e741, type: 3}
-  width: 3
-  height: 2
+  nameString: Block1-XZ
+  prefab: {fileID: 4429537419252503956, guid: fcd06e3787f58314f9728379c44435e8, type: 3}
+  visual: {fileID: 4429537419252503956, guid: fcd06e3787f58314f9728379c44435e8, type: 3}
+  width: 4
+  height: 1
   isHerb: 0
   isPreObject: 0
   loadXZ: []
+  emptyXY: []

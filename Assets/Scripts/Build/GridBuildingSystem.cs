@@ -135,6 +135,10 @@ public class GridBuildingSystem : MonoBehaviour
             //Debug.Log(Mouse3D.GetMouseWorldPosition().ToString());
 
             List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
+            for (int i = 0; i < gridPositionList.Count; i++)
+            {
+                Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
+            }
             //Test can Build
             bool canBuild = true;
 
@@ -234,20 +238,20 @@ public class GridBuildingSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             placedObjectTypeSO = placedObjectTypeSOList[2];
-            SelectButtons[2].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 2) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
+            placedObjectTypeSO2 = placedObjectTypeSOList2[2];
+            RefreshSelectedObjectType();
+
+            //SelectButtons[1].GetComponent<Image>().enabled = true;
+            //for (int i = 0; i < SelectButtons.Count; i++)
+            //{
+            //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
+            //}
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             placedObjectTypeSO = placedObjectTypeSOList[3];
-            SelectButtons[3].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 3) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
+            placedObjectTypeSO2 = placedObjectTypeSOList2[3];
+            RefreshSelectedObjectType();
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
@@ -336,7 +340,7 @@ public class GridBuildingSystem : MonoBehaviour
     }
     public PlacedObjectTypeSO GetPlacedObjectTypeSO()
     {
-        Debug.Log(placedObjectTypeSO.name);
+        //Debug.Log(placedObjectTypeSO.name);
         return placedObjectTypeSO;
     }
     private void RefreshSelectedObjectType()
