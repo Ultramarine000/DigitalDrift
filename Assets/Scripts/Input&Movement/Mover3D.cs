@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mover3D : MonoBehaviour
 {
-    [Header("速度")]
+    [Header("speed")]
     public float groundMoveSpeed = 7f;
     private float movementForce = 1f;
 
@@ -14,7 +14,7 @@ public class Mover3D : MonoBehaviour
     //private Vector2 inputVector = Vector2.zero;
     private PlayerInputHandler pih;
 
-    [Header("环境检测")]
+    [Header("environment check")]
     public float footOffset = 0.4f;
     public float floatingSpeed = 200;
     public LayerMask groundLayer;
@@ -49,10 +49,10 @@ public class Mover3D : MonoBehaviour
     }
     void PhysicsCheck()
     {
-        bool leftFrontCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 2.5f, groundLayer);
-        bool rightFrontCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 2.5f, groundLayer);
-        bool leftBackCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 2.5f, groundLayer);
-        bool rightBackCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 2.5f, groundLayer);
+        bool leftFrontCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 4f, groundLayer);
+        bool rightFrontCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 4f, groundLayer);
+        bool leftBackCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 4f, groundLayer);
+        bool rightBackCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 4f, groundLayer);
 
         //groundCheck
         if (leftFrontCheckGround || rightFrontCheckGround || leftBackCheckGround || rightBackCheckGround)

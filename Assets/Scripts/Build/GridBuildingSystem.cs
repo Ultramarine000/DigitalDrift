@@ -25,14 +25,14 @@ public class GridBuildingSystem : MonoBehaviour
     //private Vector3 startPos = new Vector3();
     public GameObject labelParent;
 
-    //[Header("预载组")]
-    //public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
+    [Header("Pre Load Group")]
+    public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
     private void Awake()
     {
         Instance = this;
 
         int gridWidth = 20;
-        int gridHeight = 11;
+        int gridHeight = 20;
         float cellSize1 = 1f;
         float cellSize2 = 5f;
         gridXY = new GridXY<GridObject>(gridWidth, gridHeight, cellSize1, gridXYStartPos.position, (GridXY<GridObject> g, int x, int y) => new GridObject(g, x, y), true);//show debug
@@ -41,7 +41,7 @@ public class GridBuildingSystem : MonoBehaviour
         placedObjectTypeSO = placedObjectTypeSOList[0];
         placedObjectTypeSO2 = placedObjectTypeSOList2[0];
         //Debug.Log(placedObjectTypeSO.name + "1");
-        //PreLoadAllObject();
+        PreLoadAllObject();
     }
     private class GridObject
     {
@@ -135,10 +135,10 @@ public class GridBuildingSystem : MonoBehaviour
             //Debug.Log(Mouse3D.GetMouseWorldPosition().ToString());
 
             List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
-            for (int i = 0; i < gridPositionList.Count; i++)
-            {
-                Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
-            }
+            //for (int i = 0; i < gridPositionList.Count; i++)
+            //{
+            //    Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
+            //}
             //Test can Build
             bool canBuild = true;
 
@@ -182,6 +182,7 @@ public class GridBuildingSystem : MonoBehaviour
                     gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
                     //Debug.Log(gridPosition.x + ", " + gridPosition.y);
                 }
+                OnObjectPlaced?.Invoke(this, EventArgs.Empty);
             }
             else
             {
@@ -194,7 +195,7 @@ public class GridBuildingSystem : MonoBehaviour
             GridObject gridObject = gridXY.GetGridObject(Mouse3D.GetMouseWorldPosition());
             PlacedObject placedObject = gridObject.GetPlacedObject();
 
-            if (placedObject != null)
+            if (placedObject != null && !placedObject.CheckPreObj())
             {
                 placedObject.DestroySelf();
 
@@ -290,26 +291,32 @@ public class GridBuildingSystem : MonoBehaviour
             }
         }
     }
-    //public void PreLoadAllObject()
-    //{
-    //    //PreLoad preLoadHandler = GetComponent<PreLoad>();
-    //    foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
-    //    {
-    //        Vector2Int rotationOffset = placedObjectTypeSO.GetRotationOffset(dir);
-    //        foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ)
-    //        {
-    //            Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridXY.CellSize;
-    //            PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
+    public void PreLoadAllObject()
+    {
+        foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
+        {
+            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
+            //Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
+            foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ)
+            {
+                Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
+                //Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
 
-    //            List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
-    //            foreach (Vector2Int gridPosition in gridPositionList)
-    //            {
-    //                if (!placedObject.CheckHerb())
-    //                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-    //            }
-    //        }
-    //    }
-    //}
+                PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
+
+                //GameObject tempLabel = placedObject.gameObject;
+                //PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, loadXZ, dir, placedObjectTypeSO2, tempLabel);
+
+
+                List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
+                foreach (Vector2Int gridPosition in gridPositionList)
+                {
+                    if (!placedObject.CheckHerb())
+                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                }
+            }
+        }
+    }
 
     public Vector3 GetMouseWorldSnappedPosition()
     {

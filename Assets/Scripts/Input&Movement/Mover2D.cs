@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mover2D : MonoBehaviour
 {
-    [Header("速度")]
+    [Header("Speed")]
     public float groundMoveSpeed = 7f;
     private float movementForce = 1f;
 
@@ -14,7 +14,7 @@ public class Mover2D : MonoBehaviour
     //private Vector2 inputVector = Vector2.zero;
     private PlayerInputHandler pih;
 
-    [Header("环境检测")]
+    [Header("environment check")]
     public float footOffset = 0.4f;
     public float floatingSpeed = 200;
     public LayerMask groundLayer;

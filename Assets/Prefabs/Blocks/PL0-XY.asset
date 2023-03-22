@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49c775d97432204da7fa48c6049c2f9, type: 3}
+  m_Name: PL0-XY
+  m_EditorClassIdentifier: 
+  nameString: PL0-XY
+  prefab: {fileID: 8800953658359070823, guid: 92bbbbb54a7ffc946828d9c972e7488b, type: 3}
+  visual: {fileID: 8800953658359070823, guid: 92bbbbb54a7ffc946828d9c972e7488b, type: 3}
+  width: 2
+  height: 2
+  isHerb: 0
+  isPreObject: 1
+  loadXZ:
+  - {x: 0, y: 0}
+  - {x: 9, y: 4}
+  - {x: 2, y: 15}
+  - {x: 10, y: 16}
+  - {x: 17, y: 9}
+  - {x: 18, y: 14}
+  emptyXY: []
