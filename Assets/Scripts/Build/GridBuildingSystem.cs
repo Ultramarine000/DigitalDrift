@@ -254,48 +254,48 @@ public class GridBuildingSystem : MonoBehaviour
             //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
             //}
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[3];
-            placedObjectTypeSO2 = placedObjectTypeSOList2[3];
-            RefreshSelectedObjectType();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[4];
-            SelectButtons[4].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 4) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[5];
-            SelectButtons[5].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 5) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[6];
-            SelectButtons[6].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 6) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[7];
-            SelectButtons[7].GetComponent<Image>().enabled = true;
-            for (int i = 0; i < SelectButtons.Count; i++)
-            {
-                if (i != 7) SelectButtons[i].GetComponent<Image>().enabled = false;
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[3];
+        //    placedObjectTypeSO2 = placedObjectTypeSOList2[3];
+        //    RefreshSelectedObjectType();
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[4];
+        //    SelectButtons[4].GetComponent<Image>().enabled = true;
+        //    for (int i = 0; i < SelectButtons.Count; i++)
+        //    {
+        //        if (i != 4) SelectButtons[i].GetComponent<Image>().enabled = false;
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha6))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[5];
+        //    SelectButtons[5].GetComponent<Image>().enabled = true;
+        //    for (int i = 0; i < SelectButtons.Count; i++)
+        //    {
+        //        if (i != 5) SelectButtons[i].GetComponent<Image>().enabled = false;
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[6];
+        //    SelectButtons[6].GetComponent<Image>().enabled = true;
+        //    for (int i = 0; i < SelectButtons.Count; i++)
+        //    {
+        //        if (i != 6) SelectButtons[i].GetComponent<Image>().enabled = false;
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[7];
+        //    SelectButtons[7].GetComponent<Image>().enabled = true;
+        //    for (int i = 0; i < SelectButtons.Count; i++)
+        //    {
+        //        if (i != 7) SelectButtons[i].GetComponent<Image>().enabled = false;
+        //    }
+        //}
     }
 
     public void BuildBlocks(Vector3 mousePos)

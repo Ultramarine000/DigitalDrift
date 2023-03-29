@@ -47282,6 +47282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391038095}
   - component: {fileID: 1391038096}
+  - component: {fileID: 1391038097}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -47327,6 +47328,20 @@ MonoBehaviour:
   playerCount: 0
   CountDownTime: 0
   GameCountTimeText: {fileID: 0}
+--- !u!114 &1391038097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391038094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7763cd6ec6227c7409682b30d79f69bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 10
+  isCountdown: 1
 --- !u!1 &1392772227
 GameObject:
   m_ObjectHideFlags: 0
