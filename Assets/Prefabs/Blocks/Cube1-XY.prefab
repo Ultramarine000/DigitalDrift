@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3816893418986736357}
   - component: {fileID: 7943881169922098998}
   - component: {fileID: 1239525013787767183}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3750064165860519010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4122223717313470982}
   - component: {fileID: 1273982354013920710}
   - component: {fileID: 7826164166741260703}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4429537419252503956}
   - component: {fileID: -2259376762410816751}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube1-XY
   m_TagString: Untagged
   m_Icon: {fileID: 0}

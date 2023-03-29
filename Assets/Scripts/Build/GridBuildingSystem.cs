@@ -12,9 +12,11 @@ public class GridBuildingSystem : MonoBehaviour
     public event EventHandler OnSelectedChanged;
     public event EventHandler OnObjectPlaced;
 
+    public bool mouseTestEnable = true;
     public Transform gridXYStartPos;
     public Transform gridXZStartPos;
     public List<Button> SelectButtons;
+    [SerializeField] public GameObject player2D;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList2;
     private PlacedObjectTypeSO placedObjectTypeSO;
@@ -35,8 +37,8 @@ public class GridBuildingSystem : MonoBehaviour
         int gridHeight = 20;
         float cellSize1 = 1f;
         float cellSize2 = 5f;
-        gridXY = new GridXY<GridObject>(gridWidth, gridHeight, cellSize1, gridXYStartPos.position, (GridXY<GridObject> g, int x, int y) => new GridObject(g, x, y), true);//show debug
-        gridXZ = new GridXZ<GridObject>(gridWidth, gridHeight, cellSize2, gridXZStartPos.position, (GridXZ<GridObject> g, int x, int z) => new GridObject(g, x, z), true);//show debug
+        gridXY = new GridXY<GridObject>(gridWidth, gridHeight, cellSize1, gridXYStartPos.position, (GridXY<GridObject> g, int x, int y) => new GridObject(g, x, y), false);//show debug
+        gridXZ = new GridXZ<GridObject>(gridWidth, gridHeight, cellSize2, gridXZStartPos.position, (GridXZ<GridObject> g, int x, int z) => new GridObject(g, x, z), false);//show debug
 
         placedObjectTypeSO = placedObjectTypeSOList[0];
         placedObjectTypeSO2 = placedObjectTypeSOList2[0];
@@ -129,89 +131,93 @@ public class GridBuildingSystem : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        
+
+        if (mouseTestEnable)
         {
-            gridXY.GetXY(Mouse3D.GetMouseWorldPosition(), out int x, out int y);//获得鼠标位置的网格坐标
-            //Debug.Log(Mouse3D.GetMouseWorldPosition().ToString());
-
-            List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
-            //for (int i = 0; i < gridPositionList.Count; i++)
-            //{
-            //    Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
-            //}
-            //Test can Build
-            bool canBuild = true;
-
-            foreach (Vector2Int gridPosition in gridPositionList)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (!placedObjectTypeSO.isHerb)//当前选中不是草（是建筑）
-                {
-                    if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
-                    {
-                        //不能在此建造
-                        canBuild = false;
-                        break;
-                    }
-                }
-                else //当前选中草
-                {
-                    if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).CanbuildHerb(placedObjectTypeSO))
-                    {
-                        //不能在此建造
-                        canBuild = false;
-                        break;
-                    }
-                }
+                gridXY.GetXY(Mouse3D.GetMouseWorldPosition(), out int x, out int y);//获得鼠标位置的网格坐标
+                Debug.Log(x + "+" + y);
 
-            }
+                List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
+                //for (int i = 0; i < gridPositionList.Count; i++)
+                //{
+                //    Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
+                //}
 
-            if (canBuild)
-            {
-                Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
-                Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
-                //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
-                Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
-                Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
-
-                PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
-                GameObject tempLabel = placedObject.gameObject;
-                PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
+                //Test can Build
+                bool canBuild = true;
 
                 foreach (Vector2Int gridPosition in gridPositionList)
                 {
-                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                    //Debug.Log(gridPosition.x + ", " + gridPosition.y);
+                    if (!placedObjectTypeSO.isHerb)//当前选中不是草（是建筑）
+                    {
+                        if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
+                        {
+                            //不能在此建造
+                            canBuild = false;
+                            break;
+                        }
+                    }
+                    else //当前选中草
+                    {
+                        if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).CanbuildHerb(placedObjectTypeSO))
+                        {
+                            //不能在此建造
+                            canBuild = false;
+                            break;
+                        }
+                    }
+
                 }
-                OnObjectPlaced?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                Debug.Log("NOOOOOOOOOOBuildHere!!!!");
-            }
-        }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            GridObject gridObject = gridXY.GetGridObject(Mouse3D.GetMouseWorldPosition());
-            PlacedObject placedObject = gridObject.GetPlacedObject();
-
-            if (placedObject != null && !placedObject.CheckPreObj())
-            {
-                placedObject.DestroySelf();
-
-                List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
-                foreach (Vector2Int gridPosition in gridPositionList)
+                if (canBuild)
                 {
-                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//网格中清除占用的Tansform
+                    Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
+                    Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
+                    //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
+                    Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
+                    Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
+
+                    PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
+                    GameObject tempLabel = placedObject.gameObject;
+                    PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
+
+                    foreach (Vector2Int gridPosition in gridPositionList)
+                    {
+                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                                                                                                           //Debug.Log(gridPosition.x + ", " + gridPosition.y);
+                    }
+                    OnObjectPlaced?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    Debug.Log("NOOOOOOOOOOBuildHere!!!!");
+                }
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                GridObject gridObject = gridXY.GetGridObject(Mouse3D.GetMouseWorldPosition());
+                PlacedObject placedObject = gridObject.GetPlacedObject();
+
+                if (placedObject != null && !placedObject.CheckPreObj())
+                {
+                    placedObject.DestroySelf();
+
+                    List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
+                    foreach (Vector2Int gridPosition in gridPositionList)
+                    {
+                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//网格中清除占用的Tansform
+                    }
                 }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            dir = PlacedObjectTypeSO.GetNextDir(dir);
-            //Debug.Log("" + dir);
-        }
+        
+
+        
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -291,6 +297,88 @@ public class GridBuildingSystem : MonoBehaviour
             }
         }
     }
+
+    public void BuildBlocks(Vector3 mousePos)
+    {
+        gridXY.GetXY(mousePos, out int x, out int y);//2D player pos's gridPos
+        //Debug.Log(x + "+" + y);
+
+        List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
+
+        //Test can Build
+        bool canBuild = true;
+
+        foreach (Vector2Int gridPosition in gridPositionList)
+        {
+            if (!placedObjectTypeSO.isHerb)//当前选中不是草（是建筑）
+            {
+                if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
+                {
+                    //不能在此建造
+                    canBuild = false;
+                    break;
+                }
+            }
+            else //当前选中草
+            {
+                if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).CanbuildHerb(placedObjectTypeSO))
+                {
+                    //不能在此建造
+                    canBuild = false;
+                    break;
+                }
+            }
+
+        }
+
+        if (canBuild)
+        {
+            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
+            Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
+            //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
+            Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
+            Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
+
+            PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
+            GameObject tempLabel = placedObject.gameObject;
+            PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
+
+            foreach (Vector2Int gridPosition in gridPositionList)
+            {
+                gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                //Debug.Log(gridPosition.x + ", " + gridPosition.y);
+            }
+            OnObjectPlaced?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            Debug.Log("NOOOOOOOOOOBuildHere!!!!");
+        }
+    }
+
+    public void RemoveBlocks(Vector3 mousePos)
+    {
+        GridObject gridObject = gridXY.GetGridObject(mousePos);
+        PlacedObject placedObject = gridObject.GetPlacedObject();
+
+        if (placedObject != null && !placedObject.CheckPreObj())
+        {
+            placedObject.DestroySelf();
+
+            List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
+            foreach (Vector2Int gridPosition in gridPositionList)
+            {
+                gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//网格中清除占用的Tansform
+            }
+        }
+    }
+
+    public void RotateBlocks()
+    {
+        dir = PlacedObjectTypeSO.GetNextDir(dir);
+        //Debug.Log(dir);
+    }
+
     public void PreLoadAllObject()
     {
         foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
@@ -318,6 +406,11 @@ public class GridBuildingSystem : MonoBehaviour
         }
     }
 
+    private Vector3 GetPlayer2DPos()
+    {
+        Vector3 player2DPos = player2D.transform.position;
+        return player2DPos;
+    }
     public Vector3 GetMouseWorldSnappedPosition()
     {
         Vector3 mousePosition = Mouse3D.GetMouseWorldPosition();
@@ -332,6 +425,22 @@ public class GridBuildingSystem : MonoBehaviour
         else
         {
             return mousePosition;
+        }
+    }
+    public Vector3 GetPlayer2DWorldSnappedPosition()
+    {
+        Vector3 player2DPosition = GetPlayer2DPos();
+        gridXY.GetXY(player2DPosition, out int x, out int y);
+
+        if (placedObjectTypeSO != null)
+        {
+            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
+            Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.GetCellSize();
+            return placedObjectWorldPosition;
+        }
+        else
+        {
+            return player2DPosition;
         }
     }
     public Quaternion GetPlacedObjectRotation()

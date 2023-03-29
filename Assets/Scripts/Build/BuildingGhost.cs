@@ -22,7 +22,12 @@ public class BuildingGhost : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 targetPosition = GridBuildingSystem.Instance.GetMouseWorldSnappedPosition();
+        Vector3 targetPosition = new Vector3(0,0,0);
+        //Vector3 targetPosition = GridBuildingSystem.Instance.GetMouseWorldSnappedPosition();
+        if (GridBuildingSystem.Instance.mouseTestEnable == false)
+            targetPosition = GridBuildingSystem.Instance.GetPlayer2DWorldSnappedPosition();
+        else targetPosition = GridBuildingSystem.Instance.GetMouseWorldSnappedPosition();
+
         targetPosition.z = -1.4f;
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 15f);
 

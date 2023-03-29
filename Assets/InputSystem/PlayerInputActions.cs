@@ -46,12 +46,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""Ybtn"",
                     ""type"": ""Button"",
                     ""id"": ""ef9de459-ae1c-48ca-986e-db0107812c9e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -62,6 +62,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightShoulder"",
+                    ""type"": ""Button"",
+                    ""id"": ""c281a239-27ff-4862-a041-ae2a0255351f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Xbtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""15f41c91-b7fb-4d9f-ba5c-ab578d54595e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bbtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8b303ae-6eb3-4b2c-8066-10d9ca04841f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -171,7 +198,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""Jump"",
+                    ""action"": ""Ybtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -182,7 +209,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Jump"",
+                    ""action"": ""Ybtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0d13c70-b0c9-4ef7-b328-2067e60a2a25"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Ybtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -194,6 +232,116 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""Sight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""5241e054-7824-4548-8422-77feb324783b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""eb9835a6-f054-48fe-b5ab-532df71c607b"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""68cec0fe-d0be-4880-9ec4-85cb035515a7"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f95b89d8-d380-4af3-99a6-b458817cc8c2"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ae7b497f-107b-4d15-b55d-0528e923343f"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ced5d643-0365-4a78-a847-a5fbf4b3ba0a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""RightShoulder"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""370997e6-2b74-47c7-8925-cd741ec6bc2c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Xbtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e8c36a-7281-48e4-b886-2bfca275f0e0"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Xbtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""718dbe80-adad-40c0-8705-a5929a2b7f7d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Bbtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6772b5e-982e-4303-8ace-03768b1143b2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Bbtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -381,8 +529,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m__3DPlayer = asset.FindActionMap("3DPlayer", throwIfNotFound: true);
         m__3DPlayer_Select = m__3DPlayer.FindAction("Select", throwIfNotFound: true);
         m__3DPlayer_Movement = m__3DPlayer.FindAction("Movement", throwIfNotFound: true);
-        m__3DPlayer_Jump = m__3DPlayer.FindAction("Jump", throwIfNotFound: true);
+        m__3DPlayer_Ybtn = m__3DPlayer.FindAction("Ybtn", throwIfNotFound: true);
         m__3DPlayer_Sight = m__3DPlayer.FindAction("Sight", throwIfNotFound: true);
+        m__3DPlayer_RightShoulder = m__3DPlayer.FindAction("RightShoulder", throwIfNotFound: true);
+        m__3DPlayer_Xbtn = m__3DPlayer.FindAction("Xbtn", throwIfNotFound: true);
+        m__3DPlayer_Bbtn = m__3DPlayer.FindAction("Bbtn", throwIfNotFound: true);
         // 2DPlayer
         m__2DPlayer = asset.FindActionMap("2DPlayer", throwIfNotFound: true);
         m__2DPlayer_Select = m__2DPlayer.FindAction("Select", throwIfNotFound: true);
@@ -451,16 +602,22 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private I_3DPlayerActions m__3DPlayerActionsCallbackInterface;
     private readonly InputAction m__3DPlayer_Select;
     private readonly InputAction m__3DPlayer_Movement;
-    private readonly InputAction m__3DPlayer_Jump;
+    private readonly InputAction m__3DPlayer_Ybtn;
     private readonly InputAction m__3DPlayer_Sight;
+    private readonly InputAction m__3DPlayer_RightShoulder;
+    private readonly InputAction m__3DPlayer_Xbtn;
+    private readonly InputAction m__3DPlayer_Bbtn;
     public struct _3DPlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public _3DPlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m__3DPlayer_Select;
         public InputAction @Movement => m_Wrapper.m__3DPlayer_Movement;
-        public InputAction @Jump => m_Wrapper.m__3DPlayer_Jump;
+        public InputAction @Ybtn => m_Wrapper.m__3DPlayer_Ybtn;
         public InputAction @Sight => m_Wrapper.m__3DPlayer_Sight;
+        public InputAction @RightShoulder => m_Wrapper.m__3DPlayer_RightShoulder;
+        public InputAction @Xbtn => m_Wrapper.m__3DPlayer_Xbtn;
+        public InputAction @Bbtn => m_Wrapper.m__3DPlayer_Bbtn;
         public InputActionMap Get() { return m_Wrapper.m__3DPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -476,12 +633,21 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMovement;
-                @Jump.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnJump;
+                @Ybtn.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnYbtn;
+                @Ybtn.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnYbtn;
+                @Ybtn.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnYbtn;
                 @Sight.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSight;
                 @Sight.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSight;
                 @Sight.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSight;
+                @RightShoulder.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnRightShoulder;
+                @RightShoulder.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnRightShoulder;
+                @RightShoulder.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnRightShoulder;
+                @Xbtn.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnXbtn;
+                @Xbtn.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnXbtn;
+                @Xbtn.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnXbtn;
+                @Bbtn.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
+                @Bbtn.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
+                @Bbtn.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
             }
             m_Wrapper.m__3DPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -492,12 +658,21 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
+                @Ybtn.started += instance.OnYbtn;
+                @Ybtn.performed += instance.OnYbtn;
+                @Ybtn.canceled += instance.OnYbtn;
                 @Sight.started += instance.OnSight;
                 @Sight.performed += instance.OnSight;
                 @Sight.canceled += instance.OnSight;
+                @RightShoulder.started += instance.OnRightShoulder;
+                @RightShoulder.performed += instance.OnRightShoulder;
+                @RightShoulder.canceled += instance.OnRightShoulder;
+                @Xbtn.started += instance.OnXbtn;
+                @Xbtn.performed += instance.OnXbtn;
+                @Xbtn.canceled += instance.OnXbtn;
+                @Bbtn.started += instance.OnBbtn;
+                @Bbtn.performed += instance.OnBbtn;
+                @Bbtn.canceled += instance.OnBbtn;
             }
         }
     }
@@ -589,8 +764,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnSelect(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnYbtn(InputAction.CallbackContext context);
         void OnSight(InputAction.CallbackContext context);
+        void OnRightShoulder(InputAction.CallbackContext context);
+        void OnXbtn(InputAction.CallbackContext context);
+        void OnBbtn(InputAction.CallbackContext context);
     }
     public interface I_2DPlayerActions
     {

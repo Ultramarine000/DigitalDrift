@@ -12,12 +12,15 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerConfiguration playerConfig;
-    private Mover3D mover;
+    private Mover3D mover3D;
+    private Mover2D mover2D;
     //private Toward toward;
     public List<GameObject> Models;
     public Vector3 processiveForce = Vector3.zero;
     public Vector3 sightDir = Vector3.zero;
     public Vector2 leftStickInput = Vector2.zero;
+    public Vector2 rightStickInput = Vector2.zero;
+    public bool rightShoulderBtn = false;
     public int bounceForce;
     public float jumpForce = 1.8f;
     [SerializeField]
@@ -35,8 +38,11 @@ public class PlayerInputHandler : MonoBehaviour
     public PlayerInputActions playerInputActions;
     private void Awake()
     {
-        mover = GetComponent<Mover3D>();
+        mover3D = GetComponent<Mover3D>();
+        mover2D = GetComponent<Mover2D>();
         playerInputActions = new PlayerInputActions();
+
+        playerInputActions._3DPlayer.Ybtn.performed += PressY;
         //Debug.Log(gameObject.layer);
         //if (gameObject.layer == 8)
         //{
@@ -54,10 +60,10 @@ public class PlayerInputHandler : MonoBehaviour
     public void InitializePlayer(PlayerConfiguration pc)
     {
         playerConfig = pc;
-        //mover.anim = Models[pc.modeIndex].GetComponent<Animator>();
+        //mover3D.anim = Models[pc.modeIndex].GetComponent<Animator>();
         //Models[pc.modeIndex].SetActive(true);
 
-        //mover = Models[pc.modeIndex].GetComponent<Mover3D>();
+        //mover3D = Models[pc.modeIndex].GetComponent<Mover3D>();
         playerConfig.Input.onActionTriggered += Input_onActionTriggered;
     }
 
@@ -68,30 +74,64 @@ public class PlayerInputHandler : MonoBehaviour
             On3DMove(obj);
             //Debug.Log("trigger3D");
         }
-        if (obj.action.name == playerInputActions._3DPlayer.Jump.name && mover.isOnGround)//按键且在地面上可跳
+        if (obj.action.name == playerInputActions._3DPlayer.Sight.name)
         {
-            mover.rb.velocity += new Vector3(0, jumpForce, 0);
-            //mover.anim.SetTrigger("Jump");
+            On2DSightChange(obj);
+            //Debug.Log("trigger3D");
         }
+        if(obj.performed)
+        {
+            if (obj.action.name == playerInputActions._3DPlayer.Ybtn.name)//Jump for 3D and rotated for 2D
+            {
+                if (mover3D != null && mover3D.isOnGround)
+                {
+                    mover3D.rb.velocity += new Vector3(0, jumpForce, 0);
+                    //mover3D.anim.SetTrigger("Jump");
+                }
+                else if (mover2D != null)
+                    mover2D.RotateBlocks();
+            }
 
-        //if (obj.action.name == playerInputActions._2DPlayer.Movement2D.name)
-        //{
-        //    On3DMove(obj);
-        //    Debug.Log("trigger2D");
-        //}
+            if (obj.action.name == playerInputActions._3DPlayer.Xbtn.name)//set 2D
+            {
+                mover2D.BuildBlocks();
+            }
+            if (obj.action.name == playerInputActions._3DPlayer.Bbtn.name)//remove 2D
+            {
+                mover2D.RemoveBlocks();
+            }
+            //if (obj.action.name == playerInputActions._3DPlayer.RightShoulder.name)
+            //{
+            //    rightShoulderBtn = !rightShoulderBtn;
+            //}
+        }
+    }
+    public void PressY(InputAction.CallbackContext context)
+    {
+        Debug.Log("in");
+        if (context.performed)
+        {
+            Debug.Log("pressY" + context.phase);
+        }
     }
 
     public void On3DMove(CallbackContext context)
     {
-        //if (mover != null)
+        //if (mover3D != null)
 
         {
-            //mover.SetInputVector(context.ReadValue<Vector2>());
+            //mover3D.SetInputVector(context.ReadValue<Vector2>());
             processiveForce = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
             leftStickInput = new Vector2(context.ReadValue<Vector2>().x, context.ReadValue<Vector2>().y);
             //toward.SetInputVector(context.ReadValue<Vector2>());
         }
     }
+    public void On2DSightChange(CallbackContext context)
+    {
+        rightStickInput = new Vector2(context.ReadValue<Vector2>().x, context.ReadValue<Vector2>().y);
+    }
+
+
     //void OnTriggerEnter(Collider other)
     //{
     //    if (other.gameObject.tag == "Player")//Rebound

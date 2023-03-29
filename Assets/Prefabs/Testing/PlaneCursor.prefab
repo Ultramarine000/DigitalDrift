@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 823214116318695772}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16355045, y: 0.16355045, z: 0.16355045}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8698210530757598841}
   - {fileID: 4191858307980883725}
@@ -78,6 +78,8 @@ MonoBehaviour:
   processiveForce: {x: 0, y: 0, z: 0}
   sightDir: {x: 0, y: 0, z: 0}
   leftStickInput: {x: 0, y: 0}
+  rightStickInput: {x: 0, y: 0}
+  rightShoulderBtn: 0
   bounceForce: 0
   jumpForce: 1.8
   isDead: 0
@@ -108,7 +110,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   isOnGround: 0
-  animator: {fileID: 0}
+  renderSurfaceDown: {fileID: 0}
 --- !u!65 &-4397605674706254420
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -215,7 +217,7 @@ MeshCollider:
   m_GameObject: {fileID: 5060255818878013267}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -313,7 +315,7 @@ MeshCollider:
   m_GameObject: {fileID: 6767952043415376717}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30

@@ -92,7 +92,7 @@ public class PlacedObjectTypeSO : ScriptableObject
                     for (int y = 0; y < height; y++)
                     {
                         gridPositionList.Add(offset + new Vector2Int(x, y));
-                        Debug.Log("down: " + x + ", " + y);
+                        //Debug.Log("down: " + x + ", " + y);
                     }
                 }
                 for (int i = 0; i < emptyXY.Count; i++)
@@ -111,7 +111,7 @@ public class PlacedObjectTypeSO : ScriptableObject
                     for (int y = 0; y < height; y++)
                     {
                         gridPositionList.Add(offset + new Vector2Int(x, y));
-                        Debug.Log("up: " + x + ", " + y);
+                        //Debug.Log("up: " + x + ", " + y);
                     }
                 }
                 for (int i = 0; i < emptyXY.Count; i++)
@@ -129,13 +129,15 @@ public class PlacedObjectTypeSO : ScriptableObject
                 {
                     for (int y = 0; y < width; y++)
                     {
-                        Debug.Log("left: " + x + ", " + y);
+                        //Debug.Log("left: " + x + ", " + y);
                         gridPositionList.Add(offset + new Vector2Int(x, y));
                     }
                 }
                 for (int i = 0; i < emptyXY.Count; i++)
                 {
-                    removeList.Add(gridPositionList[(width - emptyXY[i].y) * width + emptyXY[i].x]);
+                    //Debug.Log("removeleft: " + (height - 1 - emptyXY[i].y) + "and " + emptyXY[i].x);
+                    removeList.Add(gridPositionList[(height - 1 - emptyXY[i].y) * width + emptyXY[i].x]);
+                    
                     //gridPositionList.RemoveAt((width - emptyXY[i].y) * width + emptyXY[i].x);
                 }
                 foreach (Vector2Int item in removeList)
@@ -149,7 +151,7 @@ public class PlacedObjectTypeSO : ScriptableObject
                     for (int y = 0; y < width; y++)
                     {
                         gridPositionList.Add(offset + new Vector2Int(x, y));
-                        Debug.Log("right: " + x + ", " + y);
+                        //Debug.Log("right: " + x + ", " + y);
                     }
                 }
                 for (int i = 0; i < emptyXY.Count; i++)

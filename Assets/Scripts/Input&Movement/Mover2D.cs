@@ -24,6 +24,8 @@ public class Mover2D : MonoBehaviour
     //public Animator anim;
 
     [SerializeField]
+    public GameObject renderSurfaceDown;
+    private GridBuildingSystem gridBuildingSys;
     //public Camera playerCamera;
     private Animator animator;
 
@@ -31,6 +33,9 @@ public class Mover2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pih = GetComponent<PlayerInputHandler>();
+        renderSurfaceDown = GameObject.Find("2DRenderSurfaceDown");
+        gridBuildingSys = GameObject.Find("GridBuildingSystem").GetComponent<GridBuildingSystem>();
+        gridBuildingSys.player2D = gameObject;
         //playerCamera = GameObject.Find("Camera3D").GetComponent<Camera>();
         //animator = GetComponent<Animator>();
     }
@@ -40,6 +45,8 @@ public class Mover2D : MonoBehaviour
     {
         PhysicsCheck();
         OnMove();
+        //renderSurfaceDown.SetActive(!pih.rightShoulderBtn);
+        OnControll();
     }
     void PhysicsCheck()
     {
@@ -93,5 +100,28 @@ public class Mover2D : MonoBehaviour
         //        anim.SetBool("Idle", true);
         //    }
 
+    }
+    void OnControll()
+    {
+        if (pih.rightStickInput.y > 0.7f )
+        {
+            renderSurfaceDown.SetActive(false);
+        }
+        if(pih.rightStickInput.y < -0.7f)
+        {
+            renderSurfaceDown.SetActive(true);
+        }
+    }
+    public void BuildBlocks()
+    {
+        gridBuildingSys.BuildBlocks(gameObject.transform.position);
+    }
+    public void RemoveBlocks()
+    {
+        gridBuildingSys.RemoveBlocks(gameObject.transform.position);
+    }
+    public void RotateBlocks()
+    {
+        gridBuildingSys.RotateBlocks();
     }
 }
