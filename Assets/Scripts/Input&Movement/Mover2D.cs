@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Mover2D : MonoBehaviour
 {
+    //[SerializeField] private GameController gameController;
+
     [Header("Speed")]
     public float groundMoveSpeed = 7f;
     private float movementForce = 1f;
 
-    public Rigidbody rb;
+    //public Rigidbody rb;
 
     private Vector3 moveDirection = Vector3.zero;
     //private Vector2 inputVector = Vector2.zero;
@@ -25,14 +27,17 @@ public class Mover2D : MonoBehaviour
 
     [SerializeField]
     public GameObject renderSurfaceDown;
+    public GameObject stateRelease;
+    public GameObject stateGrab;
     private GridBuildingSystem gridBuildingSys;
     //public Camera playerCamera;
     private Animator animator;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         pih = GetComponent<PlayerInputHandler>();
+        //gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         renderSurfaceDown = GameObject.Find("2DRenderSurfaceDown");
         gridBuildingSys = GameObject.Find("GridBuildingSystem").GetComponent<GridBuildingSystem>();
         gridBuildingSys.player2D = gameObject;
@@ -67,9 +72,10 @@ public class Mover2D : MonoBehaviour
     {
         //if (isOnGround)
         {
-            rb.velocity = new Vector3(pih.leftStickInput.x * groundMoveSpeed, pih.leftStickInput.y * groundMoveSpeed, rb.velocity.z);
+            //rb.velocity = new Vector3(pih.leftStickInput.x * groundMoveSpeed, pih.leftStickInput.y * groundMoveSpeed, rb.velocity.z);
             
-            
+            gameObject.transform.position += new Vector3(pih.leftStickInput.x * groundMoveSpeed * 0.01f, pih.leftStickInput.y * groundMoveSpeed * 0.01f, 0);
+
             //moveDirection += new Vector3(pih.leftStickInput.x, pih.leftStickInput.y) * movementForce;
 
             //rb.AddForce(moveDirection, ForceMode.Impulse);
@@ -123,5 +129,9 @@ public class Mover2D : MonoBehaviour
     public void RotateBlocks()
     {
         gridBuildingSys.RotateBlocks();
+    }
+    public void CurrentSelectIndexChange(int n)
+    {
+        gridBuildingSys.CurrentSelectChange(n);
     }
 }

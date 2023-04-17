@@ -42,7 +42,7 @@ public class PlayerInputHandler : MonoBehaviour
         mover2D = GetComponent<Mover2D>();
         playerInputActions = new PlayerInputActions();
 
-        playerInputActions._3DPlayer.Ybtn.performed += PressY;
+        //playerInputActions._3DPlayer.Ybtn.performed += PressY;
         //Debug.Log(gameObject.layer);
         //if (gameObject.layer == 8)
         //{
@@ -100,10 +100,20 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 mover2D.RemoveBlocks();
             }
-            //if (obj.action.name == playerInputActions._3DPlayer.RightShoulder.name)
-            //{
-            //    rightShoulderBtn = !rightShoulderBtn;
-            //}
+            if (obj.action.name == playerInputActions._3DPlayer.RightShoulder.name)
+            {
+                if (mover2D != null)
+                {
+                    mover2D.CurrentSelectIndexChange(1);
+                }
+            }
+            if (obj.action.name == playerInputActions._3DPlayer.LeftShoulder.name)
+            {
+                if (mover2D != null)
+                {
+                    mover2D.CurrentSelectIndexChange(-1);
+                }
+            }
         }
     }
     public void PressY(InputAction.CallbackContext context)

@@ -73,6 +73,7 @@ public class Timer : MonoBehaviour
         {
             now = TimeNow - offsetTime - timeStart;
             downNow = timeTarget - now;
+            //Debug.Log(downNow);
             if (updateEvent != null)
             {
                 if (isDownNow)
@@ -87,7 +88,9 @@ public class Timer : MonoBehaviour
             if (now > timeTarget)
             {
                 if (onCompleted != null)
+                {
                     onCompleted();
+                }
                 if (!isRepeate)
                     destory();
                 else
@@ -189,5 +192,14 @@ public class Timer : MonoBehaviour
         {
             connitueTimer();
         }
+    }
+
+    public void AddBonusTime(int bt)
+    {
+        offsetTime += bt;
+    }
+    public void SubPenaltyTime(int pt)
+    {
+        offsetTime -= pt;
     }
 }

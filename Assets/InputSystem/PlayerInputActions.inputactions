@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LeftShoulder",
+                    "type": "Button",
+                    "id": "7099c199-3c72-4148-96a3-421b584bed27",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -283,7 +292,7 @@
                     "name": "",
                     "id": "370997e6-2b74-47c7-8925-cd741ec6bc2c",
                     "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "GamePad",
                     "action": "Xbtn",
@@ -320,6 +329,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Bbtn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8fda298-99ad-4da8-b594-bf3b0951075e",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "LeftShoulder",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

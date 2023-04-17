@@ -3,32 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     [SerializeField]
     private Transform[] playerSpawns;
     [SerializeField]
     private GameObject playerPrefab2D, playerPrefab3D;
-    [SerializeField]
-    //private TextMeshProUGUI settleText;
+    //[SerializeField]
+    //private bool noTimeLeft = false;
+
     public static List<GameObject> playerList = new List<GameObject>();
     public GameObject continuePanel;
-
     public int playerCount = 0;
-
-    public float CountDownTime;
-    private float GameTime;
-    private float timer = 0;
+    public int currentBlockNum = 0;
+    public Text blockNumText;
 
     private bool[] isdead = new bool[4];
-    public Text GameCountTimeText;
+    
     public PlayerConfiguration[] playerConfigs;
     void Awake()
     {
-        GameTime = CountDownTime;
+        AddPlayer();
+    }
+
+    void AddPlayer()
+    {
         //ªÒ»°playerConfig
         playerConfigs = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
         for (int i = 0; i < playerConfigs.Length; i++)
@@ -42,7 +44,7 @@ public class GameController : MonoBehaviour
                 playerList.Add(player.gameObject);
                 playerCount++;
             }
-            else if(playerConfigs[i].modeIndex == 1)
+            else if (playerConfigs[i].modeIndex == 1)
             {
                 //playerConfigs[i].
                 var player = Instantiate(playerPrefab3D, playerSpawns[1].position, playerSpawns[1].rotation, gameObject.transform);
@@ -54,40 +56,31 @@ public class GameController : MonoBehaviour
             }
 
         }
-
-    }
-    private void AddPlayer(PlayerInput pi)
-    {
-
     }
     void Update()
-    {   //Debug.Log(playerCount);
-        //int M = (int)(GameTime / 60);
-        //float S = GameTime % 60;
-        //timer += Time.deltaTime;
-        //if (timer >= 1f)
-        //{
-        //    timer = 0;
-        //    GameTime--;
-        //    GameCountTimeText.text = M + "£∫" + string.Format("{0:00}", S);
-        //}
+    {
+        ShowCurrentBlockNum();
+        
+    }
+    void ShowCurrentBlockNum()
+    {
+        string strOri = "current blocks: ";
+        blockNumText.text = strOri + currentBlockNum.ToString();
+    }
 
-
-
-        for (int i = 0; i < playerList.Count; i++)
-        {
-            if (playerList[i] == null)
-            {
-                //Debug.Log(i);
-                isdead[i] = true;
-            }
-        }
-
-        /*if(GameTime == 0)
-        {
-         GameOver();   
-        }*/
-        //IsWin();
+    public void GameOver()
+    {
+        //over dialog + panel
+    }
+    public void Reborn()
+    {
+        Destroy(playerPrefab3D);
+        
+        //reborn Player3D
+        var player = Instantiate(playerPrefab3D, playerSpawns[1].position, playerSpawns[1].rotation, gameObject.transform);
+        player.GetComponent<PlayerInputHandler>().InitializePlayer(playerConfigs[1]);
+        //player.GetComponent<PlayerInputHandler>().playerInputActions._3DPlayer.Enable();
+        player.GetComponentInChildren<CInputHandler>().horizontal = playerConfigs[1].Input.actions.FindAction("Sight");
     }
     //void IsWin()
     //{

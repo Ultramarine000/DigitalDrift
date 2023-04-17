@@ -833,7 +833,7 @@ GameObject:
   - component: {fileID: 7304183792227053149}
   m_Layer: 8
   m_Name: 3DPlayercube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -909,8 +909,10 @@ MonoBehaviour:
   processiveForce: {x: 0, y: 0, z: 0}
   sightDir: {x: 0, y: 0, z: 0}
   leftStickInput: {x: 0, y: 0}
+  rightStickInput: {x: 0, y: 0}
+  rightShoulderBtn: 0
   bounceForce: 0
-  jumpForce: 3.5
+  jumpForce: 8
   isDead: 0
   PlayerModel: {fileID: 0}
   player3Dlayer:
