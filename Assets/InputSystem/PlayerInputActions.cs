@@ -89,6 +89,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftShoulder"",
+                    ""type"": ""Button"",
+                    ""id"": ""7099c199-3c72-4148-96a3-421b584bed27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -305,7 +314,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""370997e6-2b74-47c7-8925-cd741ec6bc2c"",
                     ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""Xbtn"",
@@ -342,6 +351,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Bbtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8fda298-99ad-4da8-b594-bf3b0951075e"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""LeftShoulder"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -534,6 +554,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m__3DPlayer_RightShoulder = m__3DPlayer.FindAction("RightShoulder", throwIfNotFound: true);
         m__3DPlayer_Xbtn = m__3DPlayer.FindAction("Xbtn", throwIfNotFound: true);
         m__3DPlayer_Bbtn = m__3DPlayer.FindAction("Bbtn", throwIfNotFound: true);
+        m__3DPlayer_LeftShoulder = m__3DPlayer.FindAction("LeftShoulder", throwIfNotFound: true);
         // 2DPlayer
         m__2DPlayer = asset.FindActionMap("2DPlayer", throwIfNotFound: true);
         m__2DPlayer_Select = m__2DPlayer.FindAction("Select", throwIfNotFound: true);
@@ -607,6 +628,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m__3DPlayer_RightShoulder;
     private readonly InputAction m__3DPlayer_Xbtn;
     private readonly InputAction m__3DPlayer_Bbtn;
+    private readonly InputAction m__3DPlayer_LeftShoulder;
     public struct _3DPlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -618,6 +640,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @RightShoulder => m_Wrapper.m__3DPlayer_RightShoulder;
         public InputAction @Xbtn => m_Wrapper.m__3DPlayer_Xbtn;
         public InputAction @Bbtn => m_Wrapper.m__3DPlayer_Bbtn;
+        public InputAction @LeftShoulder => m_Wrapper.m__3DPlayer_LeftShoulder;
         public InputActionMap Get() { return m_Wrapper.m__3DPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -648,6 +671,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Bbtn.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
                 @Bbtn.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
                 @Bbtn.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnBbtn;
+                @LeftShoulder.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
+                @LeftShoulder.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
+                @LeftShoulder.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
             }
             m_Wrapper.m__3DPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -673,6 +699,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Bbtn.started += instance.OnBbtn;
                 @Bbtn.performed += instance.OnBbtn;
                 @Bbtn.canceled += instance.OnBbtn;
+                @LeftShoulder.started += instance.OnLeftShoulder;
+                @LeftShoulder.performed += instance.OnLeftShoulder;
+                @LeftShoulder.canceled += instance.OnLeftShoulder;
             }
         }
     }
@@ -769,6 +798,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRightShoulder(InputAction.CallbackContext context);
         void OnXbtn(InputAction.CallbackContext context);
         void OnBbtn(InputAction.CallbackContext context);
+        void OnLeftShoulder(InputAction.CallbackContext context);
     }
     public interface I_2DPlayerActions
     {

@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8708665798238905454}
+  - component: {fileID: 616620751}
+  - component: {fileID: 5710022579531182108}
   m_Layer: 0
   m_Name: TimeBonus
   m_TagString: Untagged
@@ -31,8 +33,38 @@ Transform:
   - {fileID: 2900635143614717433}
   - {fileID: 3430621097724109671}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616620751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486147267846403670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f36a5256dad694fbd46919d5662bfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  wayPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &5710022579531182108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486147267846403670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4586606204a77f24c83b3e3602dac69c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6124315554721471491
 GameObject:
   m_ObjectHideFlags: 0

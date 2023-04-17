@@ -123,6 +123,7 @@ public class GridXY<TGridObject>
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
+        //Debug.Log("mousePos: x=" + x+",y="+y); 
         return GetGridObject(x, y);
     }
 

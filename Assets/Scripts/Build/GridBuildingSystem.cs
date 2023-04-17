@@ -12,13 +12,17 @@ public class GridBuildingSystem : MonoBehaviour
     public event EventHandler OnSelectedChanged;
     public event EventHandler OnObjectPlaced;
 
+    [SerializeField] private GameController gameController;
+
     public bool mouseTestEnable = true;
+    [SerializeField] private int currentPOTSO_Index = 0;
     public Transform gridXYStartPos;
     public Transform gridXZStartPos;
-    public List<Button> SelectButtons;
+    //public List<Button> SelectButtons;
     [SerializeField] public GameObject player2D;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList2;
+    
     private PlacedObjectTypeSO placedObjectTypeSO;
     private PlacedObjectTypeSO placedObjectTypeSO2;
     private GridXY<GridObject> gridXY;
@@ -32,6 +36,8 @@ public class GridBuildingSystem : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         int gridWidth = 20;
         int gridHeight = 20;
@@ -184,6 +190,8 @@ public class GridBuildingSystem : MonoBehaviour
                     GameObject tempLabel = placedObject.gameObject;
                     PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
 
+                    gameController.currentBlockNum++;
+
                     foreach (Vector2Int gridPosition in gridPositionList)
                     {
                         gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
@@ -205,6 +213,7 @@ public class GridBuildingSystem : MonoBehaviour
                 if (placedObject != null && !placedObject.CheckPreObj())
                 {
                     placedObject.DestroySelf();
+                    gameController.currentBlockNum--;
 
                     List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
                     foreach (Vector2Int gridPosition in gridPositionList)
@@ -213,47 +222,48 @@ public class GridBuildingSystem : MonoBehaviour
                     }
                 }
             }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                placedObjectTypeSO = placedObjectTypeSOList[0];
+                placedObjectTypeSO2 = placedObjectTypeSOList2[0];
+                RefreshSelectedObjectType();
+                //SelectButtons[0].GetComponent<Image>().enabled = true;
+                //for (int i = 0; i < SelectButtons.Count; i++)
+                //{
+                //    if (i != 0) SelectButtons[i].GetComponent<Image>().enabled = false;
+                //}
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                placedObjectTypeSO = placedObjectTypeSOList[1];
+                placedObjectTypeSO2 = placedObjectTypeSOList2[1];
+                RefreshSelectedObjectType();
+
+                //SelectButtons[1].GetComponent<Image>().enabled = true;
+                //for (int i = 0; i < SelectButtons.Count; i++)
+                //{
+                //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
+                //}
+            }
         }
 
         
-
+        
         
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[0];
-            placedObjectTypeSO2 = placedObjectTypeSOList2[0];
-            RefreshSelectedObjectType();
-            //SelectButtons[0].GetComponent<Image>().enabled = true;
-            //for (int i = 0; i < SelectButtons.Count; i++)
-            //{
-            //    if (i != 0) SelectButtons[i].GetComponent<Image>().enabled = false;
-            //}
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[1];
-            placedObjectTypeSO2 = placedObjectTypeSOList2[1];
-            RefreshSelectedObjectType();
-            
-            //SelectButtons[1].GetComponent<Image>().enabled = true;
-            //for (int i = 0; i < SelectButtons.Count; i++)
-            //{
-            //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
-            //}
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            placedObjectTypeSO = placedObjectTypeSOList[2];
-            placedObjectTypeSO2 = placedObjectTypeSOList2[2];
-            RefreshSelectedObjectType();
+        
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    placedObjectTypeSO = placedObjectTypeSOList[2];
+        //    placedObjectTypeSO2 = placedObjectTypeSOList2[2];
+        //    RefreshSelectedObjectType();
 
-            //SelectButtons[1].GetComponent<Image>().enabled = true;
-            //for (int i = 0; i < SelectButtons.Count; i++)
-            //{
-            //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
-            //}
-        }
+        //    //SelectButtons[1].GetComponent<Image>().enabled = true;
+        //    //for (int i = 0; i < SelectButtons.Count; i++)
+        //    //{
+        //    //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
+        //    //}
+        //}
         //if (Input.GetKeyDown(KeyCode.Alpha4))
         //{
         //    placedObjectTypeSO = placedObjectTypeSOList[3];
@@ -343,6 +353,8 @@ public class GridBuildingSystem : MonoBehaviour
             GameObject tempLabel = placedObject.gameObject;
             PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
 
+            gameController.currentBlockNum++;
+
             foreach (Vector2Int gridPosition in gridPositionList)
             {
                 gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
@@ -365,6 +377,8 @@ public class GridBuildingSystem : MonoBehaviour
         {
             placedObject.DestroySelf();
 
+            gameController.currentBlockNum--;
+
             List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
             foreach (Vector2Int gridPosition in gridPositionList)
             {
@@ -377,6 +391,21 @@ public class GridBuildingSystem : MonoBehaviour
     {
         dir = PlacedObjectTypeSO.GetNextDir(dir);
         //Debug.Log(dir);
+    }
+
+    public void CurrentSelectChange(int n)
+    {
+        int listLength = placedObjectTypeSOList.Count;
+        currentPOTSO_Index += n;
+        if (currentPOTSO_Index < 0)
+            currentPOTSO_Index = listLength - 1;
+        else if (currentPOTSO_Index > listLength - 1)
+            currentPOTSO_Index = 0;
+
+        Debug.Log(currentPOTSO_Index);
+        placedObjectTypeSO = placedObjectTypeSOList[currentPOTSO_Index];
+        placedObjectTypeSO2 = placedObjectTypeSOList2[currentPOTSO_Index];
+        RefreshSelectedObjectType();
     }
 
     public void PreLoadAllObject()
