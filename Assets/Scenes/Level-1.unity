@@ -77877,6 +77877,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 616620751, guid: 7306b4cab1ef27045ad9b330c3be04f0, type: 3}
+      propertyPath: speed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 616620751, guid: 7306b4cab1ef27045ad9b330c3be04f0, type: 3}
       propertyPath: wayPoint.Array.data[0]
       value: 
       objectReference: {fileID: 1779907485}
