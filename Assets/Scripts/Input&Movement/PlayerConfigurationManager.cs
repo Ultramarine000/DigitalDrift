@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ public class PlayerConfigurationManager : MonoBehaviour
     private int MaxPlayers = 2;
     public GameObject title;
     public static PlayerConfigurationManager Instance { get; private set; }
+
+    public List<PlayerSetupMenuController> setupMenus;
 
     private void Awake()
     {
@@ -66,6 +69,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     public void ReadyPlayer(int index)
     {
+        Debug.Log("once");
         playerConfigs[index].isReady = true;
         if (playerConfigs.Count == MaxPlayers && playerConfigs.All(p => p.isReady == true))
         {
@@ -73,6 +77,25 @@ public class PlayerConfigurationManager : MonoBehaviour
             else if (playerConfigs[0].mapIndex == 1) SceneManager.LoadScene("Level-1");
             else if (playerConfigs[0].mapIndex == 2) SceneManager.LoadScene("Level-1");
         }
+    }
+    public void Switch()
+    {
+        int k = playerConfigs[0].modeIndex;
+        playerConfigs[0].modeIndex = playerConfigs[1].modeIndex;
+        playerConfigs[1].modeIndex = k;
+
+        //Debug.Log("once");
+        //Debug.Log(playerConfigs[0].modeIndex + " and " + playerConfigs[1].modeIndex);
+        setupMenus[0].SwitchFrame();
+        setupMenus[1].SwitchFrame();
+    }
+    public void SetRileyPosForP0()
+    {
+        setupMenus[0].SetRileyPosForP0();
+    }
+    public void CloseP0WaitingTitle()
+    {
+        setupMenus[0].CloseP0WaitingTitle();
     }
 }
 
