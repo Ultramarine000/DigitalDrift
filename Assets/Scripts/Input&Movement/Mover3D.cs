@@ -78,9 +78,9 @@ public class Mover3D : MonoBehaviour
     {
         if (isOnGround)
         {
-            //rb.velocity = new Vector3(pih.processiveForce.x * groundMoveSpeed, rb.velocity.y, pih.processiveForce.z * groundMoveSpeed);
-            moveDirection += pih.processiveForce.x * GetCameraRight(playerCamera) * movementForce;
-            moveDirection += pih.processiveForce.z * GetCameraForward(playerCamera) * movementForce;
+            //rb.velocity = new Vector3(pih.processiveForce.x * moveSpeed, rb.velocity.y, pih.processiveForce.z * moveSpeed);
+            moveDirection += pih.leftStickInput.x * GetCameraRight(playerCamera) * movementForce;
+            moveDirection += pih.leftStickInput.y * GetCameraForward(playerCamera) * movementForce;
 
             rb.AddForce(moveDirection, ForceMode.Impulse);
             moveDirection = Vector3.zero;

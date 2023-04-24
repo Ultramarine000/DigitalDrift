@@ -66,8 +66,8 @@ public class TimerSystem : MonoBehaviour
     // 计时结束的回调
     void OnComplete()
     {
-        string strOri = "Time until shutdown: ";
-        leftTime.text = strOri + "00:00";
+        string strOri = "Shutdown";
+        leftTime.text = strOri;
         batteryController.SetZero();
         Debug.Log("计时完成");
         gameController.GameOver();
@@ -76,8 +76,8 @@ public class TimerSystem : MonoBehaviour
     // 计时器的进程
     void OnProcess(float p)
     {
-        string strOri = "Time until shutdown: ";
-        leftTime.text = strOri + FormatTime(p);
+        //string strOri = "Shutdown:\n";
+        leftTime.text = FormatTime(p);
         curMin = GetMinutes(p);
         curSec = GetSec(p);
         //Debug.Log(FormatTime(p));

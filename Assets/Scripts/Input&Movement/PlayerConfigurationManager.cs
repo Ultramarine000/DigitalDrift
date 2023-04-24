@@ -69,13 +69,14 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     public void ReadyPlayer(int index)
     {
-        Debug.Log("once");
+        //Debug.Log("once");
         playerConfigs[index].isReady = true;
-        if (playerConfigs.Count == MaxPlayers && playerConfigs.All(p => p.isReady == true))
+        //if (playerConfigs.Count == MaxPlayers && playerConfigs.All(p => p.isReady == true))
+        if (playerConfigs[1].isReady)
         {
-            if (playerConfigs[0].mapIndex == 0) SceneManager.LoadScene("Level-1");
-            else if (playerConfigs[0].mapIndex == 1) SceneManager.LoadScene("Level-1");
-            else if (playerConfigs[0].mapIndex == 2) SceneManager.LoadScene("Level-1");
+            if (playerConfigs[1].mapIndex == 0) SceneManager.LoadScene("Level-1");
+            else if (playerConfigs[1].mapIndex == 1) SceneManager.LoadScene("Level-1");
+            else if (playerConfigs[1].mapIndex == 2) SceneManager.LoadScene("Level-1");
         }
     }
     public void Switch()

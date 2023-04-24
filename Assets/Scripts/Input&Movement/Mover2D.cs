@@ -7,10 +7,10 @@ public class Mover2D : MonoBehaviour
     //[SerializeField] private GameController gameController;
 
     [Header("Speed")]
-    public float groundMoveSpeed = 7f;
+    public float moveSpeed = 7f;
     private float movementForce = 1f;
 
-    //public Rigidbody rb;
+    private Rigidbody rb;
 
     private Vector3 moveDirection = Vector3.zero;
     //private Vector2 inputVector = Vector2.zero;
@@ -35,7 +35,7 @@ public class Mover2D : MonoBehaviour
 
     private void Awake()
     {
-        //rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         pih = GetComponent<PlayerInputHandler>();
         //gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         renderSurfaceDown = GameObject.Find("2DRenderSurfaceDown");
@@ -72,9 +72,15 @@ public class Mover2D : MonoBehaviour
     {
         //if (isOnGround)
         {
-            //rb.velocity = new Vector3(pih.leftStickInput.x * groundMoveSpeed, pih.leftStickInput.y * groundMoveSpeed, rb.velocity.z);
-            
-            gameObject.transform.position += new Vector3(pih.leftStickInput.x * groundMoveSpeed * 0.01f, pih.leftStickInput.y * groundMoveSpeed * 0.01f, 0);
+            if (Mathf.Abs(pih.leftStickInput.x) < 0.05f || Mathf.Abs(pih.leftStickInput.y) < 0.05f)
+            {
+                rb.velocity = Vector3.zero;
+            }
+            else
+                rb.velocity = new Vector3(pih.leftStickInput.x * moveSpeed, pih.leftStickInput.y * moveSpeed, rb.velocity.z);
+
+            //gameObject.transform.position += new Vector3(pih.leftStickInput.x * moveSpeed * 0.01f, pih.leftStickInput.y * moveSpeed * 0.01f, 0);
+
 
             //moveDirection += new Vector3(pih.leftStickInput.x, pih.leftStickInput.y) * movementForce;
 
@@ -86,8 +92,8 @@ public class Mover2D : MonoBehaviour
 
             //Vector3 horizontalVelocity = rb.velocity;
             //horizontalVelocity.z = 0;
-            //if (horizontalVelocity.sqrMagnitude > groundMoveSpeed * groundMoveSpeed)
-            //    rb.velocity = horizontalVelocity.normalized * groundMoveSpeed;
+            //if (horizontalVelocity.sqrMagnitude > moveSpeed * moveSpeed)
+            //    rb.velocity = horizontalVelocity.normalized * moveSpeed;
 
 
 

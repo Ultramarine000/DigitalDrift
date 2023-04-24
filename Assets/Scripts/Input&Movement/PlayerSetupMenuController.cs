@@ -84,7 +84,7 @@ public class PlayerSetupMenuController : MonoBehaviour
         {
             inputEnable = true;
         }
-        Debug.Log(april.GetComponent<RectTransform>().position);
+        //Debug.Log(april.GetComponent<RectTransform>().position);
     }
 
     /*public void SetColor(Material color)

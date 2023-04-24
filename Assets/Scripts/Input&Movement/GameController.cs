@@ -64,8 +64,8 @@ public class GameController : MonoBehaviour
     }
     void ShowCurrentBlockNum()
     {
-        string strOri = "current blocks: ";
-        blockNumText.text = strOri + currentBlockNum.ToString();
+        //string strOri = "current blocks:\n";
+        blockNumText.text = currentBlockNum.ToString();
     }
 
     public void GameOver()

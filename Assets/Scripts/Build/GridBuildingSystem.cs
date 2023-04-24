@@ -18,7 +18,7 @@ public class GridBuildingSystem : MonoBehaviour
     [SerializeField] private int currentPOTSO_Index = 0;
     public Transform gridXYStartPos;
     public Transform gridXZStartPos;
-    //public List<Button> SelectButtons;
+    public List<Image> SelectButtons;
     [SerializeField] public GameObject player2D;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList2;
@@ -402,9 +402,16 @@ public class GridBuildingSystem : MonoBehaviour
         else if (currentPOTSO_Index > listLength - 1)
             currentPOTSO_Index = 0;
 
-        Debug.Log(currentPOTSO_Index);
+        //Debug.Log(currentPOTSO_Index);
         placedObjectTypeSO = placedObjectTypeSOList[currentPOTSO_Index];
         placedObjectTypeSO2 = placedObjectTypeSOList2[currentPOTSO_Index];
+
+        SelectButtons[currentPOTSO_Index].GetComponent<Image>().enabled = true;
+        for (int i = 0; i < SelectButtons.Count; i++)
+        {
+            if (i != currentPOTSO_Index) SelectButtons[i].GetComponent<Image>().enabled = false;
+        }
+
         RefreshSelectedObjectType();
     }
 
