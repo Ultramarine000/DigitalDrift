@@ -77,6 +77,9 @@ public class PlayerConfigurationManager : MonoBehaviour
             if (playerConfigs[1].mapIndex == 0) SceneManager.LoadScene("Level-1");
             else if (playerConfigs[1].mapIndex == 1) SceneManager.LoadScene("Level-1");
             else if (playerConfigs[1].mapIndex == 2) SceneManager.LoadScene("Level-1");
+
+            FindObjectOfType<AudioManager>().StopPlaying("MainMenuTheme");
+            FindObjectOfType<AudioManager>().Play("LevelMusic");
         }
     }
     public void Switch()
