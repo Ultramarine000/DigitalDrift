@@ -6,7 +6,7 @@ public class Mover3D : MonoBehaviour
 {
     [Header("speed")]
     public float groundMoveSpeed = 7f;
-    private float movementForce = 1f;
+    //private float movementForce = 1f;
 
     public Rigidbody rb;
 
@@ -83,10 +83,20 @@ public class Mover3D : MonoBehaviour
         if (isOnGround)
         {
             //rb.velocity = new Vector3(pih.processiveForce.x * moveSpeed, rb.velocity.y, pih.processiveForce.z * moveSpeed);
-            moveDirection += pih.leftStickInput.x * GetCameraRight(playerCamera) * movementForce;
-            moveDirection += pih.leftStickInput.y * GetCameraForward(playerCamera) * movementForce;
+            moveDirection += pih.leftStickInput.x * GetCameraRight(playerCamera);
+            moveDirection += pih.leftStickInput.y * GetCameraForward(playerCamera);
 
-            rb.AddForce(moveDirection, ForceMode.Impulse);
+            if (Mathf.Abs(pih.leftStickInput.x) < 0.02f || Mathf.Abs(pih.leftStickInput.y) < 0.02f)
+            {
+                rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                rb.velocity = new Vector3(moveDirection.x * groundMoveSpeed, rb.velocity.y, groundMoveSpeed * moveDirection.z);
+            }
+
+
+            //rb.AddForce(moveDirection, ForceMode.Impulse);
             moveDirection = Vector3.zero;
 
             if (rb.velocity.y < 0f)

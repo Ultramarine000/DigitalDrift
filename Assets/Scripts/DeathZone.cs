@@ -28,8 +28,9 @@ public class DeathZone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            //Destroy(other.gameObject);
             //gamecontroller 销毁角色 播放特效 生成新的在原点
-            timerSystem.TouchDeathZone(penaltySeconds);
+            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject);            
         }
     }
 }

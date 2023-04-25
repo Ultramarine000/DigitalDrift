@@ -31,6 +31,8 @@ public class GridBuildingSystem : MonoBehaviour
     //private Vector3 startPos = new Vector3();
     public GameObject labelParent;
 
+    private bool hasFirstRemove = false;
+
     [Header("Pre Load Group")]
     public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
     private void Awake()
@@ -49,6 +51,10 @@ public class GridBuildingSystem : MonoBehaviour
         placedObjectTypeSO = placedObjectTypeSOList[0];
         placedObjectTypeSO2 = placedObjectTypeSOList2[0];
         //Debug.Log(placedObjectTypeSO.name + "1");
+        
+    }
+    private void Start()
+    {
         PreLoadAllObject();
     }
     private class GridObject
@@ -135,178 +141,6 @@ public class GridBuildingSystem : MonoBehaviour
             return placedObject.CheckShadowTree();//如果格子上是阴影树
         }
     }
-    private void Update()
-    {
-        
-
-        if (mouseTestEnable)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                gridXY.GetXY(Mouse3D.GetMouseWorldPosition(), out int x, out int y);//获得鼠标位置的网格坐标
-                Debug.Log(x + "+" + y);
-
-                List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
-                //for (int i = 0; i < gridPositionList.Count; i++)
-                //{
-                //    Debug.Log("gridPositionList[" + i + "]=" + gridPositionList[i]);
-                //}
-
-                //Test can Build
-                bool canBuild = true;
-
-                foreach (Vector2Int gridPosition in gridPositionList)
-                {
-                    if (!placedObjectTypeSO.isHerb)//当前选中不是草（是建筑）
-                    {
-                        if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
-                        {
-                            //不能在此建造
-                            canBuild = false;
-                            break;
-                        }
-                    }
-                    else //当前选中草
-                    {
-                        if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).CanbuildHerb(placedObjectTypeSO))
-                        {
-                            //不能在此建造
-                            canBuild = false;
-                            break;
-                        }
-                    }
-
-                }
-
-                if (canBuild)
-                {
-                    Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
-                    Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
-                    //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
-                    Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
-                    Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
-
-                    PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
-                    GameObject tempLabel = placedObject.gameObject;
-                    PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
-
-                    gameController.currentBlockNum++;
-
-                    foreach (Vector2Int gridPosition in gridPositionList)
-                    {
-                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                                                                                                           //Debug.Log(gridPosition.x + ", " + gridPosition.y);
-                    }
-                    OnObjectPlaced?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    Debug.Log("NOOOOOOOOOOBuildHere!!!!");
-                }
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                GridObject gridObject = gridXY.GetGridObject(Mouse3D.GetMouseWorldPosition());
-                PlacedObject placedObject = gridObject.GetPlacedObject();
-
-                if (placedObject != null && !placedObject.CheckPreObj())
-                {
-                    placedObject.DestroySelf();
-                    gameController.currentBlockNum--;
-
-                    List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
-                    foreach (Vector2Int gridPosition in gridPositionList)
-                    {
-                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//网格中清除占用的Tansform
-                    }
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                placedObjectTypeSO = placedObjectTypeSOList[0];
-                placedObjectTypeSO2 = placedObjectTypeSOList2[0];
-                RefreshSelectedObjectType();
-                //SelectButtons[0].GetComponent<Image>().enabled = true;
-                //for (int i = 0; i < SelectButtons.Count; i++)
-                //{
-                //    if (i != 0) SelectButtons[i].GetComponent<Image>().enabled = false;
-                //}
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                placedObjectTypeSO = placedObjectTypeSOList[1];
-                placedObjectTypeSO2 = placedObjectTypeSOList2[1];
-                RefreshSelectedObjectType();
-
-                //SelectButtons[1].GetComponent<Image>().enabled = true;
-                //for (int i = 0; i < SelectButtons.Count; i++)
-                //{
-                //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
-                //}
-            }
-        }
-
-        
-        
-        
-
-        
-        //if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[2];
-        //    placedObjectTypeSO2 = placedObjectTypeSOList2[2];
-        //    RefreshSelectedObjectType();
-
-        //    //SelectButtons[1].GetComponent<Image>().enabled = true;
-        //    //for (int i = 0; i < SelectButtons.Count; i++)
-        //    //{
-        //    //    if (i != 1) SelectButtons[i].GetComponent<Image>().enabled = false;
-        //    //}
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[3];
-        //    placedObjectTypeSO2 = placedObjectTypeSOList2[3];
-        //    RefreshSelectedObjectType();
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha5))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[4];
-        //    SelectButtons[4].GetComponent<Image>().enabled = true;
-        //    for (int i = 0; i < SelectButtons.Count; i++)
-        //    {
-        //        if (i != 4) SelectButtons[i].GetComponent<Image>().enabled = false;
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha6))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[5];
-        //    SelectButtons[5].GetComponent<Image>().enabled = true;
-        //    for (int i = 0; i < SelectButtons.Count; i++)
-        //    {
-        //        if (i != 5) SelectButtons[i].GetComponent<Image>().enabled = false;
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha7))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[6];
-        //    SelectButtons[6].GetComponent<Image>().enabled = true;
-        //    for (int i = 0; i < SelectButtons.Count; i++)
-        //    {
-        //        if (i != 6) SelectButtons[i].GetComponent<Image>().enabled = false;
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha8))
-        //{
-        //    placedObjectTypeSO = placedObjectTypeSOList[7];
-        //    SelectButtons[7].GetComponent<Image>().enabled = true;
-        //    for (int i = 0; i < SelectButtons.Count; i++)
-        //    {
-        //        if (i != 7) SelectButtons[i].GetComponent<Image>().enabled = false;
-        //    }
-        //}
-    }
 
     public void BuildBlocks(Vector3 mousePos)
     {
@@ -370,11 +204,18 @@ public class GridBuildingSystem : MonoBehaviour
 
     public void RemoveBlocks(Vector3 mousePos)
     {
+        
         GridObject gridObject = gridXY.GetGridObject(mousePos);
         PlacedObject placedObject = gridObject.GetPlacedObject();
 
         if (placedObject != null && !placedObject.CheckPreObj())
         {
+            if (!hasFirstRemove)
+            {
+                gameObject.GetComponent<DialogTrigger>().EnterDialogueMode();
+                hasFirstRemove = true;
+            }
+
             placedObject.DestroySelf();
 
             gameController.currentBlockNum--;
@@ -417,26 +258,20 @@ public class GridBuildingSystem : MonoBehaviour
 
     public void PreLoadAllObject()
     {
-        foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList)
+        foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList) //all single preload placedObjectTypeSO
         {
-            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
-            //Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
-            foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ)
+            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir); 
+            foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ) // will located at (X,Z) -> List
             {
                 Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
-                //Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
 
+                //create at XY grid (2D)
                 PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
-
-                //GameObject tempLabel = placedObject.gameObject;
-                //PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, loadXZ, dir, placedObjectTypeSO2, tempLabel);
-
 
                 List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
                 foreach (Vector2Int gridPosition in gridPositionList)
                 {
-                    if (!placedObject.CheckHerb())
-                        gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
                 }
             }
         }

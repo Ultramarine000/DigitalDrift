@@ -9,15 +9,19 @@ public class DialogTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
+    private bool hasBeenPlayed = false;
+
     private void Awake()
     {
         playerInRange = false;
     }
     private void Update()
     {
-        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
+        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying && !hasBeenPlayed)
         {
             DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+            hasBeenPlayed = true;
+            gameObject.SetActive(false);
         }
     }
 
@@ -27,5 +31,11 @@ public class DialogTrigger : MonoBehaviour
         {
             playerInRange = true;
         }
+    }
+
+    public void EnterDialogueMode()
+    {
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+        Destroy(gameObject.GetComponent<DialogTrigger>());
     }
 }

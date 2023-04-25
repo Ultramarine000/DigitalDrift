@@ -16,6 +16,8 @@ public class Mover2D : MonoBehaviour
     //private Vector2 inputVector = Vector2.zero;
     private PlayerInputHandler pih;
 
+    //private DialogueManager dialogueManager;
+
     [Header("environment check")]
     public float footOffset = 0.4f;
     public float floatingSpeed = 200;
@@ -37,6 +39,8 @@ public class Mover2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pih = GetComponent<PlayerInputHandler>();
+        //dialogueManager = GetComponentInParent<DialogueManager>();
+
         //gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         renderSurfaceDown = GameObject.Find("2DRenderSurfaceDown");
         gridBuildingSys = GameObject.Find("GridBuildingSystem").GetComponent<GridBuildingSystem>();
@@ -48,6 +52,10 @@ public class Mover2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
         PhysicsCheck();
         OnMove();
         //renderSurfaceDown.SetActive(!pih.rightShoulderBtn);
@@ -139,5 +147,9 @@ public class Mover2D : MonoBehaviour
     public void CurrentSelectIndexChange(int n)
     {
         gridBuildingSys.CurrentSelectChange(n);
+    }
+    public void ContinueStory()
+    {
+        DialogueManager.GetInstance().ContinueStory();
     }
 }

@@ -30,37 +30,43 @@ public class TimerSystem : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if(DialogueManager.GetInstance().dialogueIsPlaying)
         {
-            Debug.Log("Pause");
-            timer.pauseTimer();//暂停
+            timer.pauseTimer();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            Debug.Log("Resume");
+        else
             timer.connitueTimer();//继续
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            Debug.Log("Restart");
-            timer.reStartTimer();//重新计时
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            Debug.Log("change length to ：20");
-            timer.changeTargetTime(20);//更改目标时间
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            //Debug.Log(timer.GetTimeNow());
-            //timer.SubPenaltyTime(60);
-            timer.AddBonusTime(60);
+        //if (Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    Debug.Log("Pause");
+        //    timer.pauseTimer();//暂停
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    Debug.Log("Resume");
+        //    timer.connitueTimer();//继续
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    Debug.Log("Restart");
+        //    timer.reStartTimer();//重新计时
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    Debug.Log("change length to ：20");
+        //    timer.changeTargetTime(20);//更改目标时间
+        //}
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    //Debug.Log(timer.GetTimeNow());
+        //    //timer.SubPenaltyTime(60);
+        //    timer.AddBonusTime(60);
             
-        }if (Input.GetKeyDown(KeyCode.P))
-        {
-            //Debug.Log(timer.GetTimeNow());
-            timer.SubPenaltyTime(60);
-        }
+        //}if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    //Debug.Log(timer.GetTimeNow());
+        //    timer.SubPenaltyTime(60);
+        //}
     }
 
     // 计时结束的回调
@@ -120,12 +126,13 @@ public class TimerSystem : MonoBehaviour
         timer.AddBonusTime(bt);
         //batteryController.ForeBackRefresh();
     }
-    public void TouchDeathZone(int pt)
+    public void TouchDeathZone(int pt, GameObject player)
     {
         float lastTime = timer.GetTimeNow();
         if (lastTime <= pt)
         {
             timer.SubPenaltyTime(pt);
+            Destroy(player);
             gameController.GameOver();
         }
         else
@@ -134,6 +141,7 @@ public class TimerSystem : MonoBehaviour
 
             //reborn panel
             gameController.Reborn();
+            Destroy(player);
         }
         
     }

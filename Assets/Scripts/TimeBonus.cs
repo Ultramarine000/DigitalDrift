@@ -21,6 +21,8 @@ public class TimeBonus : MonoBehaviour
         if(other.tag == "Player")
         {
             timerSystem.AddBonusTime(bonusSeconds);
+            if(gameObject.GetComponentInParent<DialogTrigger>() != null)
+                gameObject.GetComponentInParent<DialogTrigger>().EnterDialogueMode();
             Destroy(gameObject);
         }
     }
