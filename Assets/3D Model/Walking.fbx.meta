@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: b444832824246a042ad635540a39a5c0
 ModelImporter:
+<<<<<<< Updated upstream
   serializedVersion: 22103
+=======
+  serializedVersion: 22102
+>>>>>>> Stashed changes
   internalIDToNameTable:
   - first:
       74: -203655887218126122
@@ -104,7 +108,6 @@ ModelImporter:
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
-  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
