@@ -42,6 +42,10 @@ public class Mover3D : MonoBehaviour
     //}
     void FixedUpdate()
     {
+        if(DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
         PhysicsCheck();
         OnMove();
         LookAt();

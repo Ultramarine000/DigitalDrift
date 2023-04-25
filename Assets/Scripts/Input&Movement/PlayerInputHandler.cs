@@ -14,6 +14,7 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerConfiguration playerConfig;
     private Mover3D mover3D;
     private Mover2D mover2D;
+    private DialogueManager dialogueManager;
     //private Toward toward;
     public List<GameObject> Models;
     //public Vector3 processiveForce = Vector3.zero;
@@ -40,6 +41,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         mover3D = GetComponent<Mover3D>();
         mover2D = GetComponent<Mover2D>();
+        dialogueManager = GetComponentInParent<DialogueManager>();
         playerInputActions = new PlayerInputActions();
 
         //playerInputActions._3DPlayer.Ybtn.performed += PressY;
@@ -112,6 +114,13 @@ public class PlayerInputHandler : MonoBehaviour
                 if (mover2D != null)
                 {
                     mover2D.CurrentSelectIndexChange(-1);
+                }
+            }
+            if (obj.action.name == playerInputActions._3DPlayer.Select.name)//2D press A South Btn
+            {
+                //if (mover2D != null)
+                {
+                    dialogueManager.ContinueStory();
                 }
             }
         }
