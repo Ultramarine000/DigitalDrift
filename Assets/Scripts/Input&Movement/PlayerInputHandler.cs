@@ -16,7 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     private Mover2D mover2D;
     //private Toward toward;
     public List<GameObject> Models;
-    public Vector3 processiveForce = Vector3.zero;
+    //public Vector3 processiveForce = Vector3.zero;
     public Vector3 sightDir = Vector3.zero;
     public Vector2 leftStickInput = Vector2.zero;
     public Vector2 rightStickInput = Vector2.zero;
@@ -131,7 +131,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         {
             //mover3D.SetInputVector(context.ReadValue<Vector2>());
-            processiveForce = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
+            //processiveForce = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
             leftStickInput = new Vector2(context.ReadValue<Vector2>().x, context.ReadValue<Vector2>().y);
             //toward.SetInputVector(context.ReadValue<Vector2>());
         }
