@@ -6,7 +6,6 @@ using System;
 public class TimerSystem : MonoBehaviour
 {
     Timer timer;
-    GameController gameController;
     public int length = 10;
     public bool isCountdown = true;
 
@@ -16,12 +15,12 @@ public class TimerSystem : MonoBehaviour
 
     private int penaltyTime = 0;
     public BatteryController batteryController;
-    private void Awake()
-    {
-        gameController = GetComponent<GameController>();
-    }
+
+    private int curBlockNum = 0;
     void Start()
     {
+        Time.timeScale = 1;//游戏加速
+
         // 创建计时器
         timer = Timer.createTimer("GameTime");
         //开始计时
@@ -30,6 +29,9 @@ public class TimerSystem : MonoBehaviour
 
     void Update()
     {
+        curBlockNum = GameController.GetInstance().currentBlockNum;
+        Time.timeScale = 1 + curBlockNum * 0.2f;
+
         if(DialogueManager.GetInstance().dialogueIsPlaying)
         {
             timer.pauseTimer();
@@ -76,7 +78,7 @@ public class TimerSystem : MonoBehaviour
         leftTime.text = strOri;
         batteryController.SetZero();
         Debug.Log("计时完成");
-        gameController.GameOver();
+        GameController.GetInstance().GameOver();
     }
 
     // 计时器的进程
@@ -126,24 +128,26 @@ public class TimerSystem : MonoBehaviour
         timer.AddBonusTime(bt);
         //batteryController.ForeBackRefresh();
     }
-    public void TouchDeathZone(int pt, GameObject player)
+    public void TouchDeathZone(int pt, GameObject player, TextAsset costText, int p)
     {
         float lastTime = timer.GetTimeNow();
         if (lastTime <= pt)
         {
             timer.SubPenaltyTime(pt);
             Destroy(player);
-            gameController.GameOver();
+
+            GameController.GetInstance().GameOver();
         }
         else
         {
-            timer.SubPenaltyTime(pt);
+            DialogueManager.GetInstance().EnterDialogueMode(costText, p);
 
+            timer.SubPenaltyTime(pt);
             //reborn panel
-            gameController.Reborn();
-            Destroy(player);
+            GameController.GetInstance().Reborn();
+            //Destroy(player);
         }
-        
+
     }
 
     public void SetPenaltyTime(int pt)

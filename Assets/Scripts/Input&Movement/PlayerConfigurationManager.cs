@@ -101,6 +101,11 @@ public class PlayerConfigurationManager : MonoBehaviour
     {
         setupMenus[0].CloseP0WaitingTitle();
     }
+    public void OpenReadyPanel()
+    {
+        setupMenus[0].OpenReadyPanel();
+        setupMenus[1].OpenReadyPanel();
+    }
 }
 
 public class PlayerConfiguration

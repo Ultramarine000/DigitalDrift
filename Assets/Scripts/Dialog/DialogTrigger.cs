@@ -8,6 +8,7 @@ public class DialogTrigger : MonoBehaviour
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private int priority;
 
     private bool hasBeenPlayed = false;
 
@@ -17,11 +18,25 @@ public class DialogTrigger : MonoBehaviour
     }
     private void Update()
     {
-        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying && !hasBeenPlayed)
+        if (playerInRange && !hasBeenPlayed)
         {
-            DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
-            hasBeenPlayed = true;
-            gameObject.SetActive(false);
+            if(!DialogueManager.GetInstance().dialogueIsPlaying)
+            {
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
+                hasBeenPlayed = true;
+                //gameObject.SetActive(false);
+                Destroy(gameObject.GetComponent<DialogTrigger>());
+            }
+            else
+            {
+                if(priority > DialogueManager.GetInstance().GetCurrentPriority()) //insert dialogue has higher priority
+                {
+                    //interupt
+                    DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
+                    Debug.Log("interupt");
+                }
+            }
+            
         }
     }
 
@@ -35,7 +50,12 @@ public class DialogTrigger : MonoBehaviour
 
     public void EnterDialogueMode()
     {
-        DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
         Destroy(gameObject.GetComponent<DialogTrigger>());
+    }
+
+    public void EnterDialogueModeNoDis()
+    {
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
     }
 }

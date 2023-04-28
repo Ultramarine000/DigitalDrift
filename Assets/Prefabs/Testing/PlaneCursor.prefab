@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 823214116318695774}
   - component: {fileID: 823214116318695775}
   - component: {fileID: -4397605674706254420}
+  - component: {fileID: 1895089972943457891}
   m_Layer: 0
   m_Name: PlaneCursor
   m_TagString: Untagged
@@ -76,7 +77,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Models: []
-  processiveForce: {x: 0, y: 0, z: 0}
   sightDir: {x: 0, y: 0, z: 0}
   leftStickInput: {x: 0, y: 0}
   rightStickInput: {x: 0, y: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87056bc327a0b4e4f964327e2a356ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundMoveSpeed: 40
+  moveSpeed: 7
   footOffset: 0.4
   floatingSpeed: 200
   groundLayer:
@@ -126,6 +126,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.996295, y: 1.5, z: 9.881622}
   m_Center: {x: 0.075196184, y: 0.00000003725213, z: 0.05314156}
+--- !u!114 &1895089972943457891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823214116318695772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778fbe5abe19e894fafbabe9ca7efbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkJSON: {fileID: 4900000, guid: d5956081b45c37649b68979fe22afc43, type: 3}
+  priority: 2
 --- !u!1 &5060255818878013267
 GameObject:
   m_ObjectHideFlags: 0

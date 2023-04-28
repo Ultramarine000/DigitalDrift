@@ -9,8 +9,10 @@ public class Mover2D : MonoBehaviour
     [Header("Speed")]
     public float moveSpeed = 7f;
     private float movementForce = 1f;
+    private int curBlockNum;
 
     private Rigidbody rb;
+    private bool hasNoticed = false;
 
     private Vector3 moveDirection = Vector3.zero;
     //private Vector2 inputVector = Vector2.zero;
@@ -49,6 +51,16 @@ public class Mover2D : MonoBehaviour
         //animator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        curBlockNum = GameController.GetInstance().currentBlockNum;
+
+        if (!hasNoticed && curBlockNum == 3)
+        {
+            gameObject.GetComponent<DialogTrigger>().EnterDialogueMode();
+            hasNoticed = true;
+        }
+    }
 
     void FixedUpdate()
     {
@@ -85,7 +97,18 @@ public class Mover2D : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
             else
-                rb.velocity = new Vector3(pih.leftStickInput.x * moveSpeed, pih.leftStickInput.y * moveSpeed, rb.velocity.z);
+            {
+                if (curBlockNum * 1.7f <= moveSpeed * 0.9f)
+                {
+                    rb.velocity = new Vector3(pih.leftStickInput.x * (moveSpeed - curBlockNum*1.7f), pih.leftStickInput.y * (moveSpeed - curBlockNum * 1.7f), rb.velocity.z);
+                }
+                else
+                {
+                    rb.velocity = new Vector3(pih.leftStickInput.x * (moveSpeed * 0.2f), pih.leftStickInput.y * (moveSpeed * 0.2f), rb.velocity.z);
+                }
+
+            }
+
 
             //gameObject.transform.position += new Vector3(pih.leftStickInput.x * moveSpeed * 0.01f, pih.leftStickInput.y * moveSpeed * 0.01f, 0);
 
@@ -95,8 +118,8 @@ public class Mover2D : MonoBehaviour
             //rb.AddForce(moveDirection, ForceMode.Impulse);
             //moveDirection = Vector3.zero;
 
-            ////if (rb.velocity.y < 0f)
-            ////    rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+            //if (rb.velocity.y < 0f)
+            //    rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
 
             //Vector3 horizontalVelocity = rb.velocity;
             //horizontalVelocity.z = 0;

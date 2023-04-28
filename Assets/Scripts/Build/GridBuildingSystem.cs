@@ -12,7 +12,7 @@ public class GridBuildingSystem : MonoBehaviour
     public event EventHandler OnSelectedChanged;
     public event EventHandler OnObjectPlaced;
 
-    [SerializeField] private GameController gameController;
+    //[SerializeField] private GameController gameController;
 
     public bool mouseTestEnable = true;
     [SerializeField] private int currentPOTSO_Index = 0;
@@ -39,7 +39,7 @@ public class GridBuildingSystem : MonoBehaviour
     {
         Instance = this;
 
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        //gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         int gridWidth = 20;
         int gridHeight = 20;
@@ -187,7 +187,7 @@ public class GridBuildingSystem : MonoBehaviour
             GameObject tempLabel = placedObject.gameObject;
             PlacedObject placedObject2 = PlacedObject.Create2(placedObjectWorldPosition2, new Vector2Int(x, y), dir, placedObjectTypeSO2, tempLabel);
 
-            gameController.currentBlockNum++;
+            GameController.GetInstance().currentBlockNum++;
 
             foreach (Vector2Int gridPosition in gridPositionList)
             {
@@ -218,7 +218,7 @@ public class GridBuildingSystem : MonoBehaviour
 
             placedObject.DestroySelf();
 
-            gameController.currentBlockNum--;
+            GameController.GetInstance().currentBlockNum--;
 
             List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
             foreach (Vector2Int gridPosition in gridPositionList)

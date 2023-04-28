@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
+    private static GameController instance;
+
     [SerializeField]
     private Transform[] playerSpawns;
     [SerializeField]
@@ -24,9 +26,26 @@ public class GameController : MonoBehaviour
     private bool[] isdead = new bool[4];
     
     public PlayerConfiguration[] playerConfigs;
+    [SerializeField] private TextAsset inkJSON_NotEnough;
+    [SerializeField] private int priority;
+    public GameObject blackScreen;
     void Awake()
     {
+        if (instance != null)
+        {
+            Debug.LogWarning("Found more than one Gameontroller in the scene");
+        }
+        instance = this;
+
         AddPlayer();
+    }
+    public static GameController GetInstance()
+    {
+        return instance;
+    }
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 
     void AddPlayer()
@@ -71,15 +90,24 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         //over dialog + panel
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON_NotEnough, priority);
+        //end
+        blackScreen.SetActive(true);
     }
     public void Reborn()
     {
-        Destroy(playerPrefab3D);
-        
+        //Destroy(playerPrefab3D);
+
         //reborn Player3D
+        PlayerConfiguration p;// find 3D player input(shown as PlayerConfiguration p)  by find modeIndex == 1
+        if (playerConfigs[0].modeIndex == 1)
+        {
+            p = playerConfigs[0];
+        }
+        else p = playerConfigs[1];
+
         var player = Instantiate(playerPrefab3D, playerSpawns[1].position, playerSpawns[1].rotation, gameObject.transform);
-        player.GetComponent<PlayerInputHandler>().InitializePlayer(playerConfigs[1]);
-        //player.GetComponent<PlayerInputHandler>().playerInputActions._3DPlayer.Enable();
+        player.GetComponent<PlayerInputHandler>().InitializePlayer(p);
         player.GetComponentInChildren<CInputHandler>().horizontal = playerConfigs[1].Input.actions.FindAction("Sight");
     }
     //void IsWin()

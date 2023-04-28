@@ -7,6 +7,10 @@ public class DeathZone : MonoBehaviour
     private GameController gameController;
     private TimerSystem timerSystem;
     public int penaltySeconds;
+
+    [Header("Ink JSON")]
+    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private int priority;
     // Start is called before the first frame update
     void Awake()
     {
@@ -30,7 +34,8 @@ public class DeathZone : MonoBehaviour
         {
             //Destroy(other.gameObject);
             //gamecontroller 销毁角色 播放特效 生成新的在原点
-            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject);            
+            //DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
+            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject, inkJSON, priority);            
         }
     }
 }

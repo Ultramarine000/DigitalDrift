@@ -1,0 +1,1 @@
+The battery is draining too fast, better remove some blocks... #speaker:April  #portrait:April_surprise

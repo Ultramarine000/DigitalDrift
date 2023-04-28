@@ -1,0 +1,1 @@
+NO! Remaining battery power is low, it will shut down! Riley! #speaker:April  #portrait:April_surprise

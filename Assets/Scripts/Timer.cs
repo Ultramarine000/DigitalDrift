@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
     bool isTimer;       // 是否开始计时/
     bool isDestory = true;     // 计时结束后是否销毁/
     bool isEnd;         // 计时是否结束/
-    bool isIgnoreTimeScale = true;  // 是否忽略时间速率
+    bool isIgnoreTimeScale = false;  // 是否忽略时间速率 //and fix line 51 isIgnoreTimeScale = false
     bool isRepeate;     //是否重复
     float now;          //当前时间 正计时
     float downNow;          //倒计时
@@ -48,7 +48,7 @@ public class Timer : MonoBehaviour
     /// <param name="isDestory_">完成后是否销毁</param>
     public void startTiming(float timeTarget, bool isDownNow = false,
         CompleteEvent onCompleted_ = null, UpdateEvent update = null,
-        bool isIgnoreTimeScale = true, bool isRepeate = false, bool isDestory = true,
+        bool isIgnoreTimeScale = false, bool isRepeate = false, bool isDestory = true,
         float offsetTime = 0, bool isEnd = false, bool isTimer = true)
     {
         this.timeTarget = timeTarget;

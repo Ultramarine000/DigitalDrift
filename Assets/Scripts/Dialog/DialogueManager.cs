@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text dialogueText;
     [SerializeField] private Text displayNameText;
     [SerializeField] private Animator portraitAnimator;
+    [SerializeField] private int curPriority;
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
@@ -56,10 +57,11 @@ public class DialogueManager : MonoBehaviour
         return instance;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, int p)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
+        curPriority = p;
         dialoguePanel.SetActive(true);
 
         ContinueStory();
@@ -119,5 +121,10 @@ public class DialogueManager : MonoBehaviour
                     break;
             }
         }        
+    }
+
+    public int GetCurrentPriority()
+    {
+        return curPriority;
     }
 }

@@ -85,6 +85,8 @@ public class PlayerSetupMenuController : MonoBehaviour
             inputEnable = true;
         }
         //Debug.Log(april.GetComponent<RectTransform>().position);
+
+        //Debug.Log("Player " + PlayerIndex + ": " + EventSystem.current.currentSelectedGameObject);
     }
 
     /*public void SetColor(Material color)
@@ -141,23 +143,19 @@ public class PlayerSetupMenuController : MonoBehaviour
         aprilFrame.SetActive(!state);
         april.SetActive(!state);
     }
-    //public void SetPickTitle()
-    //{
-    //    pickTitle.SetActive(true);
-    //}
+
     public void ConfirmCharacter()
     {
-        if (PlayerIndex == 0)
+        if (PlayerIndex == 1)
         {
-            menuPanel.SetActive(false);
-            readyPanel.SetActive(true);
-            readyButton.Select();
-        }
-        else if (PlayerIndex == 1)
-        {            
             mapPanel.SetActive(true);
             firstMapButton.Select();
-            menuPanel.SetActive(false);
+
+            //menuPanel.SetActive(false);
+            switchBtn.SetActive(false);
+            confirmBtn.SetActive(false);
+            quitBtn.SetActive(false);
+            pickTitle.SetActive(false);
         }
     }
 
@@ -172,7 +170,7 @@ public class PlayerSetupMenuController : MonoBehaviour
             rileyTrans.localScale = s;
 
             Vector3 p = rileyTrans.position;
-            p.x -= 227.86f;
+            p.x -= 188.86f;
             rileyTrans.position = p;
         }
         
@@ -188,7 +186,7 @@ public class PlayerSetupMenuController : MonoBehaviour
             aprilTrans.localScale = s;
 
             Vector3 p = aprilTrans.position;
-            p.x += 236.09f;
+            p.x += 197.39f;
             aprilTrans.position = p;
         }
     }
@@ -206,9 +204,21 @@ public class PlayerSetupMenuController : MonoBehaviour
         }
         PlayerConfigurationManager.Instance.SetPlayerMap(PlayerIndex, mapIndex);
         //Debug.Log(PlayerIndex + " chosed map " + mapIndex);
+
         readyPanel.SetActive(true);
         readyButton.Select();
+
         mapPanel.SetActive(false);
+    }
+
+    public void OpenReadyPanel()
+    {
+        if(PlayerIndex == 0)
+        {
+            readyPanel.SetActive(true);
+            readyButton.Select();
+        }
+       
     }
 
     public void ReadyPlayer()
@@ -219,6 +229,8 @@ public class PlayerSetupMenuController : MonoBehaviour
         }
         PlayerConfigurationManager.Instance.ReadyPlayer(PlayerIndex);
         readyButton.gameObject.SetActive(false);
+
+        //Debug.Log(PlayerIndex + "is redy");
     }
     public void ContinueGame(int lastWinnerIndex)
     {
