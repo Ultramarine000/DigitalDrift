@@ -30,7 +30,10 @@ public class DeathZone : MonoBehaviour
         {
             //Destroy(other.gameObject);
             //gamecontroller 销毁角色 播放特效 生成新的在原点
-            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject);            
+            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject);
+
+            // DeathScreamSFX Play
+            FindObjectOfType<AudioManager>().Play("DeathScreamSFX");
         }
     }
 }

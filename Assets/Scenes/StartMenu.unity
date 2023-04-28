@@ -522,10 +522,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundlist:
   - name: MainMenuTheme
-    clip: {fileID: 8300000, guid: 5277c4caba1173842962406c99113fe5, type: 3}
-    volume: 0.6
+    clip: {fileID: 8300000, guid: 0f79211321dbef14db2ce0f249179783, type: 3}
+    volume: 0.2
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - name: LevelMusic
+    clip: {fileID: 8300000, guid: f186eafe163260f4da33dc0acecf3ae5, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: ComputingAmbienceSFX
+    clip: {fileID: 8300000, guid: 494ab10169761b645903c47cabafdd4d, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: DeathScreamSFX
+    clip: {fileID: 8300000, guid: 2f324a001c9593d4aa966fd8986d980b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!4 &960711456
 Transform:
