@@ -78,8 +78,10 @@ public class PlayerConfigurationManager : MonoBehaviour
             else if (playerConfigs[1].mapIndex == 1) SceneManager.LoadScene("Level-1");
             else if (playerConfigs[1].mapIndex == 2) SceneManager.LoadScene("Level-1");
 
+            // AudioManager will stop playing the MainMenuTheme and begin playing the LevelMusic and ComputerAmbienceSFX
             FindObjectOfType<AudioManager>().StopPlaying("MainMenuTheme");
             FindObjectOfType<AudioManager>().Play("LevelMusic");
+            FindObjectOfType<AudioManager>().Play("ComputingAmbienceSFX");
         }
     }
     public void Switch()
