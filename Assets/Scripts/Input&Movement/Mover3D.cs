@@ -20,12 +20,10 @@ public class Mover3D : MonoBehaviour
     public LayerMask groundLayer;
     [SerializeField]
     public bool isOnGround = false;
-    //[SerializeField]
-    //public Animator anim;
+    public Animator anim;
 
     [SerializeField]
     public Camera playerCamera;
-    private Animator animator;
 
     private void Awake()
     {
@@ -35,11 +33,6 @@ public class Mover3D : MonoBehaviour
         //animator = GetComponent<Animator>();
     }
 
-
-    //public void SetInputVector(Vector2 direction)
-    //{
-    //    inputVector = direction;
-    //}
     void FixedUpdate()
     {
         if(DialogueManager.GetInstance().dialogueIsPlaying)
@@ -53,10 +46,10 @@ public class Mover3D : MonoBehaviour
     }
     void PhysicsCheck()
     {
-        bool leftFrontCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 4f, groundLayer);
-        bool rightFrontCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 4f, groundLayer);
-        bool leftBackCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 4f, groundLayer);
-        bool rightBackCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 4f, groundLayer);
+        bool leftFrontCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 1f, groundLayer);
+        bool rightFrontCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, footOffset + 0.1f), Vector3.down, 1f, groundLayer);
+        bool leftBackCheckGround = Raycast(new Vector3(-footOffset - 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 1f, groundLayer);
+        bool rightBackCheckGround = Raycast(new Vector3(footOffset + 0.1f, 0.5f, -footOffset - 0.1f), Vector3.down, 1f, groundLayer);
 
         //groundCheck
         if (leftFrontCheckGround || rightFrontCheckGround || leftBackCheckGround || rightBackCheckGround)
@@ -88,40 +81,39 @@ public class Mover3D : MonoBehaviour
 
             if (Mathf.Abs(pih.leftStickInput.x) < 0.02f || Mathf.Abs(pih.leftStickInput.y) < 0.02f)
             {
-                rb.velocity = Vector3.zero;
+                float vy = rb.velocity.y;
+                rb.velocity = new Vector3(0, vy, 0);
             }
-            else
+            else 
             {
                 rb.velocity = new Vector3(moveDirection.x * groundMoveSpeed, rb.velocity.y, groundMoveSpeed * moveDirection.z);
             }
 
-
-            //rb.AddForce(moveDirection, ForceMode.Impulse);
             moveDirection = Vector3.zero;
 
-            if (rb.velocity.y < 0f)
-                rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+            //if (rb.velocity.y < 0f)
+            //    rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
 
             Vector3 horizontalVelocity = rb.velocity;
             horizontalVelocity.y = 0;
             if (horizontalVelocity.sqrMagnitude > groundMoveSpeed * groundMoveSpeed)
                 rb.velocity = horizontalVelocity.normalized * groundMoveSpeed + Vector3.up * rb.velocity.y;
 
-            //if(rb.velocity.x != 0||rb.velocity.z!=0) anim.SetTrigger("Run");
-            //else anim.ResetTrigger("Run");
+            if (rb.velocity.x != 0 || rb.velocity.z != 0)
+            {
+                anim.SetBool("Idle", false);
+                anim.SetBool("Run", true);
+                //anim.SetBool("Idle", false);
+                //anim.SetTrigger("RunT");
+            }
+
+            else
+            {
+                anim.SetBool("Run", false);
+                //anim.SetBool("Idle", true);
+                anim.SetBool("Idle",true);
+            }
         }
-
-        //    if (rb.velocity.x != 0 || rb.velocity.z != 0)
-        //    {
-        //        anim.SetBool("Idle", false);
-        //        anim.SetTrigger("Run");
-        //    }
-        //    else
-        //    {
-        //        //Debug.Log("Idle");
-        //        anim.SetBool("Idle", true);
-        //    }
-
     }
     private void LookAt()
     {

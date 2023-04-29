@@ -79,14 +79,19 @@ public class PlayerInputHandler : MonoBehaviour
             On2DSightChange(obj);
             //Debug.Log("trigger3D");
         }
-        if(obj.performed)
+        
+        if (obj.performed)
         {
             if (obj.action.name == playerInputActions._3DPlayer.Ybtn.name)//Jump for 3D and rotated for 2D
             {
                 if (mover3D != null && mover3D.isOnGround)
                 {
                     mover3D.rb.velocity += new Vector3(0, jumpForce, 0);
-                    //mover3D.anim.SetTrigger("Jump");
+                    //mover3D.rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+                    mover3D.anim.SetBool("Idle", false);
+                    //mover3D.anim.SetBool("Run", false);
+                    //mover3D.anim.SetBool("Jump", true);
+                    mover3D.anim.SetTrigger("JumpT");
                 }
                 else if (mover2D != null)
                     mover2D.RotateBlocks();
