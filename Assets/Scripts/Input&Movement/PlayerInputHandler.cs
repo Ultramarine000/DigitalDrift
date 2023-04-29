@@ -121,6 +121,10 @@ public class PlayerInputHandler : MonoBehaviour
                     mover2D.ContinueStory();
                 }
             }
+            if (obj.action.name == playerInputActions._3DPlayer.Skip.name)
+            {
+                VideoPanelCtrl.GetInstance().PressStopKey();
+            }
         }
     }
     public void PressY(InputAction.CallbackContext context)

@@ -98,6 +98,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""824ad6ff-a572-46ba-b860-febdee2d6743"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -364,6 +373,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""LeftShoulder"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4765ddf-09a7-488e-9bde-c549fc97d362"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f09ee05-6e6e-42b2-b160-5f5eebf0b800"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -555,6 +586,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m__3DPlayer_Xbtn = m__3DPlayer.FindAction("Xbtn", throwIfNotFound: true);
         m__3DPlayer_Bbtn = m__3DPlayer.FindAction("Bbtn", throwIfNotFound: true);
         m__3DPlayer_LeftShoulder = m__3DPlayer.FindAction("LeftShoulder", throwIfNotFound: true);
+        m__3DPlayer_Skip = m__3DPlayer.FindAction("Skip", throwIfNotFound: true);
         // 2DPlayer
         m__2DPlayer = asset.FindActionMap("2DPlayer", throwIfNotFound: true);
         m__2DPlayer_Select = m__2DPlayer.FindAction("Select", throwIfNotFound: true);
@@ -629,6 +661,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m__3DPlayer_Xbtn;
     private readonly InputAction m__3DPlayer_Bbtn;
     private readonly InputAction m__3DPlayer_LeftShoulder;
+    private readonly InputAction m__3DPlayer_Skip;
     public struct _3DPlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -641,6 +674,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Xbtn => m_Wrapper.m__3DPlayer_Xbtn;
         public InputAction @Bbtn => m_Wrapper.m__3DPlayer_Bbtn;
         public InputAction @LeftShoulder => m_Wrapper.m__3DPlayer_LeftShoulder;
+        public InputAction @Skip => m_Wrapper.m__3DPlayer_Skip;
         public InputActionMap Get() { return m_Wrapper.m__3DPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -674,6 +708,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @LeftShoulder.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
                 @LeftShoulder.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
                 @LeftShoulder.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnLeftShoulder;
+                @Skip.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
+                @Skip.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
+                @Skip.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
             }
             m_Wrapper.m__3DPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -702,6 +739,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @LeftShoulder.started += instance.OnLeftShoulder;
                 @LeftShoulder.performed += instance.OnLeftShoulder;
                 @LeftShoulder.canceled += instance.OnLeftShoulder;
+                @Skip.started += instance.OnSkip;
+                @Skip.performed += instance.OnSkip;
+                @Skip.canceled += instance.OnSkip;
             }
         }
     }
@@ -799,6 +839,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnXbtn(InputAction.CallbackContext context);
         void OnBbtn(InputAction.CallbackContext context);
         void OnLeftShoulder(InputAction.CallbackContext context);
+        void OnSkip(InputAction.CallbackContext context);
     }
     public interface I_2DPlayerActions
     {
