@@ -154,34 +154,23 @@ public class GridBuildingSystem : MonoBehaviour
 
         foreach (Vector2Int gridPosition in gridPositionList)
         {
-            if (!placedObjectTypeSO.isHerb)//当前选中不是草（是建筑）
+            if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
             {
-                if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).Canbuild())
-                {
-                    //不能在此建造
-                    canBuild = false;
-                    break;
-                }
-            }
-            else //当前选中草
-            {
-                if (!gridXY.GetGridObject(gridPosition.x, gridPosition.y).CanbuildHerb(placedObjectTypeSO))
-                {
-                    //不能在此建造
-                    canBuild = false;
-                    break;
-                }
-            }
-
+                //不能在此建造
+                canBuild = false;
+                break;
+            }            
         }
 
         if (canBuild)
         {
             Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
-            Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
-            //Debug.Log(placedObjectTypeSO.GetRotationOffset(dir));
+            //Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
+            //Debug.Log("rotationOffset : " + rotationOffset + " 2 : " + rotationOffset2);
+
             Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
-            Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset2.x, 0, rotationOffset2.y) * gridXZ.CellSize;
+            Vector3 placedObjectWorldPosition2 = gridXZ.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, 0, rotationOffset.y) * gridXZ.CellSize;
+            //Debug.Log("x: " + x + " y: " + y);
 
             PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, new Vector2Int(x, y), dir, placedObjectTypeSO, labelParent);
             GameObject tempLabel = placedObject.gameObject;
@@ -192,7 +181,7 @@ public class GridBuildingSystem : MonoBehaviour
             foreach (Vector2Int gridPosition in gridPositionList)
             {
                 gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                //Debug.Log(gridPosition.x + ", " + gridPosition.y);
+                Debug.Log("写入：" + gridPosition.x + ", " + gridPosition.y);
             }
             OnObjectPlaced?.Invoke(this, EventArgs.Empty);
         }

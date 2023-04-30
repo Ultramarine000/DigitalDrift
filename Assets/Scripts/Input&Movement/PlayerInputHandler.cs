@@ -87,7 +87,6 @@ public class PlayerInputHandler : MonoBehaviour
                 if (mover3D != null && mover3D.isOnGround)
                 {
                     mover3D.rb.velocity += new Vector3(0, jumpForce, 0);
-                    //mover3D.rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
                     mover3D.anim.SetBool("Idle", false);
                     //mover3D.anim.SetBool("Run", false);
                     //mover3D.anim.SetBool("Jump", true);

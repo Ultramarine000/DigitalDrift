@@ -19,7 +19,7 @@ public class PlacedObject : MonoBehaviour
     }
     public static PlacedObject Create2(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO, GameObject labelParent)
     {
-        Transform placedObjectTransform = Instantiate(placedObjectTypeSO.prefab, worldPosition, Quaternion.Euler(0,  placedObjectTypeSO.GetRotationAngle(dir),0));//placedObjectTypeSO.GetRotationAngle(dir)
+        Transform placedObjectTransform = Instantiate(placedObjectTypeSO.prefab, worldPosition, Quaternion.Euler(0,  -placedObjectTypeSO.GetRotationAngle(dir),0));//placedObjectTypeSO.GetRotationAngle(dir)
         placedObjectTransform.parent = labelParent.transform;//…Ë÷√∏∏ŒÔÃÂ
 
         PlacedObject placedObject = placedObjectTransform.GetComponent<PlacedObject>();
