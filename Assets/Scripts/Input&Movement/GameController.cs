@@ -6,10 +6,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEditor.Rendering;
+
 public class GameController : MonoBehaviour
 {
     private static GameController instance;
 
+    public bool isPausing = false;
     [SerializeField]
     private Transform[] playerSpawns;
     [SerializeField]
@@ -18,12 +21,19 @@ public class GameController : MonoBehaviour
     //private bool noTimeLeft = false;
 
     public static List<GameObject> playerList = new List<GameObject>();
+
+    [Header("Panel Display Control")]
     public GameObject continuePanel;
+    public Button resumeBtn;
+    public GameObject finishPanel;
+    public Button finishBackMenuBtn;
+    public Text finishText;
+    public GameObject camera3DBlack;
+
     public int playerCount = 0;
     public int currentBlockNum = 0;
     public Text blockNumText;
 
-    private bool[] isdead = new bool[4];
     
     public PlayerConfiguration[] playerConfigs;
     [SerializeField] private TextAsset inkJSON_NotEnough;
@@ -87,12 +97,52 @@ public class GameController : MonoBehaviour
         blockNumText.text = currentBlockNum.ToString();
     }
 
+    public void ShowContinuePanel()
+    {
+        isPausing = true;
+        gameObject.GetComponent<TimerSystem>().PauseTimer();        
+        continuePanel.SetActive(true);
+        resumeBtn.Select();
+    }
+    public void ResumeBtn()
+    {
+        isPausing = false;
+        continuePanel.SetActive(false);
+        gameObject.GetComponent<TimerSystem>().ContinueTimer();
+        
+    }
+    public void MenuBtn()
+    {
+        Destroy(PlayerConfigurationManager.GetInstance().gameObject);
+        SceneManager.LoadScene("StartMenu");
+    }
+    public void QuitBtn()
+    {
+        Application.Quit();
+    }
+    
+
     public void GameOver()
     {
         //over dialog + panel
         DialogueManager.GetInstance().EnterDialogueMode(inkJSON_NotEnough, priority);
         //end
         blackScreen.SetActive(true);
+        camera3DBlack.SetActive(true);
+        finishText.text = "Game Over - You failed";
+        finishPanel.SetActive(true);
+        finishBackMenuBtn.Select();
+    }
+
+    public void LevelFinished()
+    {
+        isPausing = true;
+        gameObject.GetComponent<TimerSystem>().PauseTimer();
+        gameObject.GetComponentInChildren<Mover3D>().StopPlayerVelocity();
+        gameObject.GetComponentInChildren<Mover3D>().enabled = false;
+        finishText.text = "Level-1 Compete";
+        finishPanel.SetActive(true);
+        finishBackMenuBtn.Select();        
     }
     public void Reborn()
     {
@@ -151,8 +201,5 @@ public class GameController : MonoBehaviour
 
     //    }
     //}
-    public void ChangeToSettleScene()
-    {
-        SceneManager.LoadScene("SettleAccount");
-    }
+   
 }

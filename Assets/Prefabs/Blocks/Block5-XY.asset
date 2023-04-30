@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameString: Block5-XY
   prefab: {fileID: 8800953658359070823, guid: 7caaa2bf241b00b46a4cfa3589d7c959, type: 3}
-  visual: {fileID: 8800953658359070823, guid: 7caaa2bf241b00b46a4cfa3589d7c959, type: 3}
+  visual: {fileID: 8800953658359070823, guid: 8f081ba703b6d024c91cc889821c26f5, type: 3}
   width: 3
   height: 2
   isHerb: 0

@@ -32,6 +32,11 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     }
 
+    public static PlayerConfigurationManager GetInstance()
+    {
+        return Instance;
+    }
+
     public void HandlePlayerJoin(PlayerInput pi)
     {
         Debug.Log("player joined " + pi.playerIndex);

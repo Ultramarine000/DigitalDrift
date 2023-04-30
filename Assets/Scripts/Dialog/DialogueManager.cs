@@ -39,19 +39,6 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (!dialogueIsPlaying)
-        {
-            return;
-        }
-
-        //if (InputManager.GetInstance().GetSubmitPressed())
-        //{
-        //    ContinueStory();
-        //}
-    }
-
     public static DialogueManager GetInstance()
     {
         return instance;

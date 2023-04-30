@@ -138,4 +138,10 @@ public class Mover3D : MonoBehaviour
         right.y = 0;
         return right.normalized;
     }
+    public void StopPlayerVelocity()
+    {
+        rb.velocity = Vector3.zero;
+        anim.SetBool("Run", false);
+        anim.SetBool("Idle", true);
+    }
 }

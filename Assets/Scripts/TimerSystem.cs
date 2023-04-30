@@ -32,7 +32,7 @@ public class TimerSystem : MonoBehaviour
         curBlockNum = GameController.GetInstance().currentBlockNum;
         Time.timeScale = 1 + curBlockNum * 0.2f;
 
-        if(DialogueManager.GetInstance().dialogueIsPlaying)
+        if (DialogueManager.GetInstance().dialogueIsPlaying || GameController.GetInstance().isPausing)
         {
             timer.pauseTimer();
         }
@@ -64,11 +64,12 @@ public class TimerSystem : MonoBehaviour
         //    //timer.SubPenaltyTime(60);
         //    timer.AddBonusTime(60);
             
-        //}if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    //Debug.Log(timer.GetTimeNow());
-        //    timer.SubPenaltyTime(60);
         //}
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            //Debug.Log(timer.GetTimeNow());
+            timer.SubPenaltyTime(60);
+        }
     }
 
     // 计时结束的回调
@@ -153,5 +154,13 @@ public class TimerSystem : MonoBehaviour
     public void SetPenaltyTime(int pt)
     {
         penaltyTime = pt;
+    }
+    public void PauseTimer()
+    {
+        timer.pauseTimer();
+    }
+    public void ContinueTimer()
+    {
+        timer.connitueTimer();
     }
 }

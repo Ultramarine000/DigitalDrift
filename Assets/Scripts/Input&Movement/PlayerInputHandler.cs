@@ -69,67 +69,78 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Input_onActionTriggered(CallbackContext obj)
     {
-        if (obj.action.name == playerInputActions._3DPlayer.Movement.name)
+        //not game pausing can move3D, move2DSight, openMenu
+        if (!GameController.GetInstance().isPausing) 
         {
-            On3DMove(obj);
-            //Debug.Log("trigger3D");
-        }
-        if (obj.action.name == playerInputActions._3DPlayer.Sight.name)
-        {
-            On2DSightChange(obj);
-            //Debug.Log("trigger3D");
-        }
-        
-        if (obj.performed)
-        {
-            if (obj.action.name == playerInputActions._3DPlayer.Ybtn.name)//Jump for 3D and rotated for 2D
+            if (obj.action.name == playerInputActions._3DPlayer.Movement.name)
             {
-                if (mover3D != null && mover3D.isOnGround)
-                {
-                    mover3D.rb.velocity += new Vector3(0, jumpForce, 0);
-                    mover3D.anim.SetBool("Idle", false);
-                    //mover3D.anim.SetBool("Run", false);
-                    //mover3D.anim.SetBool("Jump", true);
-                    mover3D.anim.SetTrigger("JumpT");
-                }
-                else if (mover2D != null)
-                    mover2D.RotateBlocks();
+                On3DMove(obj);
+                //Debug.Log("trigger3D");
+            }
+            if (obj.action.name == playerInputActions._3DPlayer.Sight.name)
+            {
+                On2DSightChange(obj);
+                //Debug.Log("trigger3D");
+            }
+            if (obj.action.name == playerInputActions._3DPlayer.MenuBtn.name)
+            {
+                GameController.GetInstance().ShowContinuePanel();
             }
 
-            if (obj.action.name == playerInputActions._3DPlayer.Xbtn.name)//set 2D
+            if (obj.performed) //when 2D & 3D using same Btn inputs
             {
-                mover2D.BuildBlocks();
-            }
-            if (obj.action.name == playerInputActions._3DPlayer.Bbtn.name)//remove 2D
-            {
-                mover2D.RemoveBlocks();
-            }
-            if (obj.action.name == playerInputActions._3DPlayer.RightShoulder.name)
-            {
-                if (mover2D != null)
+                if (obj.action.name == playerInputActions._3DPlayer.Ybtn.name)//Jump for 3D and rotated for 2D
                 {
-                    mover2D.CurrentSelectIndexChange(1);
+                    if (mover3D != null && mover3D.isOnGround)
+                    {
+                        mover3D.rb.velocity += new Vector3(0, jumpForce, 0);
+                        mover3D.anim.SetBool("Idle", false);
+                        //mover3D.anim.SetBool("Run", false);
+                        //mover3D.anim.SetBool("Jump", true);
+                        mover3D.anim.SetTrigger("JumpT");
+                    }
+                    else if (mover2D != null)
+                        mover2D.RotateBlocks();
                 }
-            }
-            if (obj.action.name == playerInputActions._3DPlayer.LeftShoulder.name)
-            {
-                if (mover2D != null)
+
+                if (obj.action.name == playerInputActions._3DPlayer.Xbtn.name)//set 2D
                 {
-                    mover2D.CurrentSelectIndexChange(-1);
+                    mover2D.BuildBlocks();
                 }
-            }
-            if (obj.action.name == playerInputActions._3DPlayer.Select.name)//2D press A South Btn
-            {
-                if (mover2D != null)
+                if (obj.action.name == playerInputActions._3DPlayer.Bbtn.name)//remove 2D
                 {
-                    mover2D.ContinueStory();
+                    mover2D.RemoveBlocks();
                 }
-            }
-            if (obj.action.name == playerInputActions._3DPlayer.Skip.name)
-            {
-                VideoPanelCtrl.GetInstance().PressStopKey();
+                if (obj.action.name == playerInputActions._3DPlayer.RightShoulder.name)
+                {
+                    if (mover2D != null)
+                    {
+                        mover2D.CurrentSelectIndexChange(1);
+                    }
+                }
+                if (obj.action.name == playerInputActions._3DPlayer.LeftShoulder.name)
+                {
+                    if (mover2D != null)
+                    {
+                        mover2D.CurrentSelectIndexChange(-1);
+                    }
+                }
+                if (obj.action.name == playerInputActions._3DPlayer.Select.name)//2D press A South Btn
+                {
+                    if (mover2D != null)
+                    {
+                        mover2D.ContinueStory();
+                    }
+                }
+                if (obj.action.name == playerInputActions._3DPlayer.Skip.name)
+                {
+                    VideoPanelCtrl.GetInstance().PressStopKey();
+                }
             }
         }
+        
+        
+        
     }
     public void PressY(InputAction.CallbackContext context)
     {

@@ -107,6 +107,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""c77f4c30-f4c1-4757-b0e5-021a9f2ba268"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -395,6 +404,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Skip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4cb6f8a1-4f0e-4759-afbe-056e31d33a9e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""MenuBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec9ebad8-2e79-4a7e-a7df-5effcf06f626"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MenuBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -587,6 +618,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m__3DPlayer_Bbtn = m__3DPlayer.FindAction("Bbtn", throwIfNotFound: true);
         m__3DPlayer_LeftShoulder = m__3DPlayer.FindAction("LeftShoulder", throwIfNotFound: true);
         m__3DPlayer_Skip = m__3DPlayer.FindAction("Skip", throwIfNotFound: true);
+        m__3DPlayer_MenuBtn = m__3DPlayer.FindAction("MenuBtn", throwIfNotFound: true);
         // 2DPlayer
         m__2DPlayer = asset.FindActionMap("2DPlayer", throwIfNotFound: true);
         m__2DPlayer_Select = m__2DPlayer.FindAction("Select", throwIfNotFound: true);
@@ -662,6 +694,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m__3DPlayer_Bbtn;
     private readonly InputAction m__3DPlayer_LeftShoulder;
     private readonly InputAction m__3DPlayer_Skip;
+    private readonly InputAction m__3DPlayer_MenuBtn;
     public struct _3DPlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -675,6 +708,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Bbtn => m_Wrapper.m__3DPlayer_Bbtn;
         public InputAction @LeftShoulder => m_Wrapper.m__3DPlayer_LeftShoulder;
         public InputAction @Skip => m_Wrapper.m__3DPlayer_Skip;
+        public InputAction @MenuBtn => m_Wrapper.m__3DPlayer_MenuBtn;
         public InputActionMap Get() { return m_Wrapper.m__3DPlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -711,6 +745,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Skip.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
                 @Skip.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
                 @Skip.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnSkip;
+                @MenuBtn.started -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMenuBtn;
+                @MenuBtn.performed -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMenuBtn;
+                @MenuBtn.canceled -= m_Wrapper.m__3DPlayerActionsCallbackInterface.OnMenuBtn;
             }
             m_Wrapper.m__3DPlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -742,6 +779,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Skip.started += instance.OnSkip;
                 @Skip.performed += instance.OnSkip;
                 @Skip.canceled += instance.OnSkip;
+                @MenuBtn.started += instance.OnMenuBtn;
+                @MenuBtn.performed += instance.OnMenuBtn;
+                @MenuBtn.canceled += instance.OnMenuBtn;
             }
         }
     }
@@ -840,6 +880,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnBbtn(InputAction.CallbackContext context);
         void OnLeftShoulder(InputAction.CallbackContext context);
         void OnSkip(InputAction.CallbackContext context);
+        void OnMenuBtn(InputAction.CallbackContext context);
     }
     public interface I_2DPlayerActions
     {

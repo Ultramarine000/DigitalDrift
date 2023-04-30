@@ -159,7 +159,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1661d0107f1402649a125d854296a76a, type: 2}
+  - {fileID: 2100000, guid: 3f81ff071c474174796eb1271153e1e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,7 +256,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1661d0107f1402649a125d854296a76a, type: 2}
+  - {fileID: 2100000, guid: 3f81ff071c474174796eb1271153e1e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -398,7 +398,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1661d0107f1402649a125d854296a76a, type: 2}
+  - {fileID: 2100000, guid: 3f81ff071c474174796eb1271153e1e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -630,7 +630,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1661d0107f1402649a125d854296a76a, type: 2}
+  - {fileID: 2100000, guid: 3f81ff071c474174796eb1271153e1e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 8800953658359070823}
   - component: {fileID: 5448876115028784851}
   m_Layer: 7
-  m_Name: Cube4-XY
+  m_Name: Cube4-XY-v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

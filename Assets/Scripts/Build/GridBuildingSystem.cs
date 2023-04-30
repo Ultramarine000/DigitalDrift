@@ -181,7 +181,7 @@ public class GridBuildingSystem : MonoBehaviour
             foreach (Vector2Int gridPosition in gridPositionList)
             {
                 gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                Debug.Log("写入：" + gridPosition.x + ", " + gridPosition.y);
+                //Debug.Log("write in : " + gridPosition.x + ", " + gridPosition.y);
             }
             OnObjectPlaced?.Invoke(this, EventArgs.Empty);
         }
