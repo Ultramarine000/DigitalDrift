@@ -249,7 +249,7 @@ public class GridBuildingSystem : MonoBehaviour
     {
         foreach (PlacedObjectTypeSO placedObjectTypeSO in preloadObjectTypeSOList) //all single preload placedObjectTypeSO
         {
-            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir); 
+            Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
             foreach (Vector2Int loadXZ in placedObjectTypeSO.loadXZ) // will located at (X,Z) -> List
             {
                 Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(loadXZ.x, loadXZ.y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
@@ -257,11 +257,13 @@ public class GridBuildingSystem : MonoBehaviour
                 //create at XY grid (2D)
                 PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
 
-                List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
-                foreach (Vector2Int gridPosition in gridPositionList)
-                {
-                    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
-                }
+                gridXY.GetGridObject(loadXZ.x, loadXZ.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+
+                //List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
+                //foreach (Vector2Int gridPosition in gridPositionList)
+                //{
+                //    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                //}
             }
         }
     }

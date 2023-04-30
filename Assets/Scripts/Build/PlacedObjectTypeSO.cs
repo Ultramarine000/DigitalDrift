@@ -42,6 +42,11 @@ public class PlacedObjectTypeSO : ScriptableObject
     //public bool needSandySoil;
     //public bool needDryLand;
 
+    private void Awake()
+    {
+        removeList = new List<Vector2Int>();
+    }
+
 
     public int GetRotationAngle(Dir dir)
     {

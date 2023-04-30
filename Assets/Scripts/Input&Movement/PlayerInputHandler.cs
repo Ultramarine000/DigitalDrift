@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using Cinemachine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
+//using static UnityEditor.Searcher.SearcherWindow.Alignment;
 //using DG.Tweening;
 
 
@@ -134,7 +134,8 @@ public class PlayerInputHandler : MonoBehaviour
                 }
                 if (obj.action.name == playerInputActions._3DPlayer.Skip.name)
                 {
-                    VideoPanelCtrl.GetInstance().PressStopKey();
+                    if(VideoPanelCtrl.GetInstance() != null)
+                        VideoPanelCtrl.GetInstance().PressStopKey();
                 }
             }
         }
