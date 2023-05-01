@@ -51,6 +51,8 @@ public class DialogueManager : MonoBehaviour
         curPriority = p;
         dialoguePanel.SetActive(true);
 
+        FindObjectOfType<AudioManager>().Play("WalkieTalkie");
+
         ContinueStory();
     }
 
@@ -60,6 +62,8 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = currentStory.Continue();
             HandleTags(currentStory.currentTags);
+
+            FindObjectOfType<AudioManager>().Play("WalkieTalkie");
         }
         else
         {

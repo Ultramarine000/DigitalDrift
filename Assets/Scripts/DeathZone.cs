@@ -35,7 +35,9 @@ public class DeathZone : MonoBehaviour
             //Destroy(other.gameObject);
             //gamecontroller 销毁角色 播放特效 生成新的在原点
             //DialogueManager.GetInstance().EnterDialogueMode(inkJSON, priority);
-            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject, inkJSON, priority);            
+            timerSystem.TouchDeathZone(penaltySeconds, other.gameObject, inkJSON, priority);
+
+            FindObjectOfType<AudioManager>().Play("DeathScreamSFX");
         }
     }
 }

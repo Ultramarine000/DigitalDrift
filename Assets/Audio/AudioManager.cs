@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
+    public bool TimeRunningOut = false;
+
     void Awake()
     {
 
