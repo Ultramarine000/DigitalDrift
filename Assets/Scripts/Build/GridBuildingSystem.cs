@@ -157,6 +157,8 @@ public class GridBuildingSystem : MonoBehaviour
 
             GameController.GetInstance().currentBlockNum++;
 
+            FindObjectOfType<AudioManager>().Play("PlaceBlock");
+
             foreach (Vector2Int gridPosition in gridPositionList)
             {
                 gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//Writing occupied BuildingObjectTransform in the grid

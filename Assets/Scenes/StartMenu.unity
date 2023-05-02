@@ -545,6 +545,36 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Collectable
+    clip: {fileID: 8300000, guid: 9834ad6d190a2f74f897583b6a88d7c8, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlaceBlock
+    clip: {fileID: 8300000, guid: 61c3b95ebdf654e49ab9cdc100ba52b3, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WalkieTalkie
+    clip: {fileID: 8300000, guid: 932d9b049ebe28d4d95dc4b8ec1df772, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Walking
+    clip: {fileID: 8300000, guid: 1eb66ce837c958644b5475029796fbb3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: TimeRunningOut
+    clip: {fileID: 8300000, guid: 7be37e8b45b9bd74c9b2f40dc4a4cb49, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
 --- !u!4 &960711456
 Transform:
   m_ObjectHideFlags: 0

@@ -24,6 +24,10 @@ public class TimeBonus : MonoBehaviour
             if(gameObject.GetComponentInParent<DialogTrigger>() != null)
                 gameObject.GetComponentInParent<DialogTrigger>().EnterDialogueMode();
             Destroy(gameObject);
+
+            FindObjectOfType<AudioManager>().Play("Collectable");
+            FindObjectOfType<AudioManager>().StopPlaying("LevelMusic");
+            FindObjectOfType<AudioManager>().Play("TimeRunningOut");
         }
     }
 }
