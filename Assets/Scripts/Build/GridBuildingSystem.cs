@@ -12,34 +12,36 @@ public class GridBuildingSystem : MonoBehaviour
     public event EventHandler OnSelectedChanged;
     public event EventHandler OnObjectPlaced;
 
-    //[SerializeField] private GameController gameController;
-
     public bool mouseTestEnable = true;
+
+    [Header("Current State Info")]
     [SerializeField] private int currentPOTSO_Index = 0;
+    [SerializeField] public GameObject player2D;
+
+    [Header("Display Ctrl")]
+    public List<Image> SelectButtons;
+
+    [Header("Build Info")]
+    public GameObject labelParent;
     public Transform gridXYStartPos;
     public Transform gridXZStartPos;
-    public List<Image> SelectButtons;
-    [SerializeField] public GameObject player2D;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList;
     [SerializeField] private List<PlacedObjectTypeSO> placedObjectTypeSOList2;
-    
+
+    [Header("Pre Load Group")]
+    public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
+
     private PlacedObjectTypeSO placedObjectTypeSO;
     private PlacedObjectTypeSO placedObjectTypeSO2;
     private GridXY<GridObject> gridXY;
     private GridXZ<GridObject> gridXZ;
     private PlacedObjectTypeSO.Dir dir = PlacedObjectTypeSO.Dir.Down;
-    //private Vector3 startPos = new Vector3();
-    public GameObject labelParent;
-
     private bool hasFirstRemove = false;
 
-    [Header("Pre Load Group")]
-    public List<PlacedObjectTypeSO> preloadObjectTypeSOList;
+    
     private void Awake()
     {
         Instance = this;
-
-        //gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         int gridWidth = 20;
         int gridHeight = 20;
@@ -108,37 +110,13 @@ public class GridBuildingSystem : MonoBehaviour
             gridXZ.TriggerGridObjectChanged(x, y);
         }
 
-        public bool CanbuildHerb(PlacedObjectTypeSO placedObjectTypeSO)
-        {
-            if (placedObject != null)
-            {
-                if (placedObject.CheckSoil())//格子是土地(且当前选中是草)
-                {
-                    return true;//能建造
-                }
-                else
-                    return false;
-            }
-            /*else if (placedObjectTypeSO.isHerb)
-                return false;*/
-            else
-                return false;
-        }
         public bool Canbuild()
         {
             return placedObject == null;
-        }
-        public bool CheckSelectHerb(PlacedObjectTypeSO placedObjectTypeSO)
-        {
-            return placedObjectTypeSO.isHerb;
-        }
+        }        
         public override string ToString()
         {
             return x + ", " + y + "\n" + placedObject;
-        }
-        public bool HasFlowerTree()
-        {
-            return placedObject.CheckShadowTree();//如果格子上是阴影树
         }
     }
 
@@ -147,7 +125,7 @@ public class GridBuildingSystem : MonoBehaviour
         gridXY.GetXY(mousePos, out int x, out int y);//2D player pos's gridPos
         //Debug.Log(x + "+" + y);
 
-        List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//建筑将占用的网格位置list
+        List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(new Vector2Int(x, y), dir);//List of grid positions to be occupied by the building
 
         //Test can Build
         bool canBuild = true;
@@ -166,6 +144,7 @@ public class GridBuildingSystem : MonoBehaviour
         {
             Vector2Int rotationOffset = placedObjectTypeSO.GetRotationWorldOffset(dir);
             //Vector2Int rotationOffset2 = placedObjectTypeSO.GetRotationOffset(dir);
+
             //Debug.Log("rotationOffset : " + rotationOffset + " 2 : " + rotationOffset2);
 
             Vector3 placedObjectWorldPosition = gridXY.GetWorldPosition(x, y) + new Vector3(rotationOffset.x, rotationOffset.y, 0) * gridXY.CellSize;
@@ -180,7 +159,7 @@ public class GridBuildingSystem : MonoBehaviour
 
             foreach (Vector2Int gridPosition in gridPositionList)
             {
-                gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//Writing occupied BuildingObjectTransform in the grid
                 //Debug.Log("write in : " + gridPosition.x + ", " + gridPosition.y);
             }
             OnObjectPlaced?.Invoke(this, EventArgs.Empty);
@@ -209,10 +188,10 @@ public class GridBuildingSystem : MonoBehaviour
 
             GameController.GetInstance().currentBlockNum--;
 
-            List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//建筑将占用的网格位置list
+            List<Vector2Int> gridPositionList = placedObject.GetGridPositionList();//List of grid positions to be occupied by the building
             foreach (Vector2Int gridPosition in gridPositionList)
             {
-                gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//网格中清除占用的Tansform
+                gridXY.GetGridObject(gridPosition.x, gridPosition.y).ClearPlacedObject();//Clearing occupied Transform in the grid
             }
         }
     }
@@ -257,12 +236,12 @@ public class GridBuildingSystem : MonoBehaviour
                 //create at XY grid (2D)
                 PlacedObject placedObject = PlacedObject.Create(placedObjectWorldPosition, loadXZ, dir, placedObjectTypeSO, labelParent);
 
-                gridXY.GetGridObject(loadXZ.x, loadXZ.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                gridXY.GetGridObject(loadXZ.x, loadXZ.y).SetPlacedObject(placedObject);//Writing occupied BuildingObjectTransform in the grid
 
-                //List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//建筑将占用的网格位置list
+                //List<Vector2Int> gridPositionList = placedObjectTypeSO.GetGridPositionList(loadXZ, dir);//List of grid positions to be occupied by the building
                 //foreach (Vector2Int gridPosition in gridPositionList)
                 //{
-                //    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//网格中写入占用的BuildingObjectTansform
+                //    gridXY.GetGridObject(gridPosition.x, gridPosition.y).SetPlacedObject(placedObject);//Writing occupied BuildingObjectTransform in the grid
                 //}
             }
         }

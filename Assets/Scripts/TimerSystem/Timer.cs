@@ -7,27 +7,27 @@ public class Timer : MonoBehaviour
 {
     UpdateEvent updateEvent;
     CompleteEvent onCompleted;
-    bool isLog = true;  //是否打印消息
-    float timeTarget;   // 计时时间/
-    float timeStart;    // 开始计时时间/
-    float offsetTime;   // 计时偏差/
-    bool isTimer;       // 是否开始计时/
-    bool isDestory = true;     // 计时结束后是否销毁/
-    bool isEnd;         // 计时是否结束/
-    bool isIgnoreTimeScale = false;  // 是否忽略时间速率 //and fix line 51 isIgnoreTimeScale = false
-    bool isRepeate;     //是否重复
-    float now;          //当前时间 正计时
-    float downNow;          //倒计时
-    bool isDownNow = false;     //是否是倒计时
+    bool isLog = true;  //Whether to print messages
+    float timeTarget;   // Timing time
+    float timeStart;    
+    float offsetTime;   
+    bool isTimer;       // Whether to start timer
+    bool isDestory = true;     // Whether destory after end
+    bool isEnd;
+    bool isIgnoreTimeScale = false;  // Whether to ignore the time rate //and fix line 51 isIgnoreTimeScale = false
+    bool isRepeate;     
+    float now;          //Current time Counting up
+    float downNow;          //Current time counting down
+    bool isDownNow = false;
 
-    // 是否使用游戏的真实时间 不依赖游戏的时间速度
+    // Whether or not to use the game's real time //Does not depend on the game's time speed
     float TimeNow
     {
         get { return isIgnoreTimeScale ? Time.realtimeSinceStartup : Time.time; }
     }
 
     /// <summary>
-    /// 创建计时器:名字  根据名字可以创建多个计时器对象
+    /// Create timer: name Multiple timer objects can be created based on the name
     /// </summary>
     public static Timer createTimer(string gobjName = "Timer")
     {
@@ -39,13 +39,13 @@ public class Timer : MonoBehaviour
     /// <summary>
     /// 开始计时
     /// </summary>
-    /// <param name="time_">目标时间</param>
-    /// <param name="isDownNow">是否是倒计时</param>
-    /// <param name="onCompleted_">完成回调函数</param>
-    /// <param name="update">计时器进程回调函数</param>
-    /// <param name="isIgnoreTimeScale_">是否忽略时间倍数</param>
-    /// <param name="isRepeate_">是否重复</param>
-    /// <param name="isDestory_">完成后是否销毁</param>
+    /// <param name="time_">targetTime</param>
+    /// <param name="isDownNow">isDown</param>
+    /// <param name="onCompleted_">onCompleted</param>
+    /// <param name="update">callback</param>
+    /// <param name="isIgnoreTimeScale_">isIgnoreTimeScale_</param>
+    /// <param name="isRepeate_">isRepeate_</param>
+    /// <param name="isDestory_">isDestory_</param>
     public void startTiming(float timeTarget, bool isDownNow = false,
         CompleteEvent onCompleted_ = null, UpdateEvent update = null,
         bool isIgnoreTimeScale = false, bool isRepeate = false, bool isDestory = true,
@@ -100,7 +100,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取剩余时间
+    /// Get time left
     /// </summary>
     /// <returns></returns>
     public float GetTimeNow()
@@ -109,7 +109,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// 计时结束
+    /// time over
     /// </summary>
     public void destory()
     {
@@ -121,13 +121,13 @@ public class Timer : MonoBehaviour
 
     float _pauseTime;
     /// <summary>
-    /// 暂停计时
+    /// pause timer
     /// </summary>
     public void pauseTimer()
     {
         if (isEnd)
         {
-            if (isLog) Debug.LogWarning("计时已经结束！");
+            if (isLog) Debug.LogWarning("The timer has ended！");
         }
         else
         {
@@ -140,13 +140,13 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// 继续计时
+    /// resuem
     /// </summary>
     public void connitueTimer()
     {
         if (isEnd)
         {
-            if (isLog) Debug.LogWarning("计时已经结束！请从新计时！");
+            if (isLog) Debug.LogWarning("The timer has ended! Please start a new timer!");
         }
         else
         {
@@ -159,7 +159,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// 重新计时
+    /// restart
     /// </summary>
     public void reStartTimer()
     {
@@ -168,7 +168,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// 更改目标时间
+    /// Change target time
     /// </summary>
     /// <param name="time_"></param>
     public void changeTargetTime(float time_)

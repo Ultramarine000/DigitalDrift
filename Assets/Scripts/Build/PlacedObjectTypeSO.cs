@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class PlacedObjectTypeSO : ScriptableObject
 {
-    public static Dir GetNextDir(Dir dir)//枚举方法获取下一个方向
+    public static Dir GetNextDir(Dir dir)//Using enumeration to obtain the next direction
     {
         switch (dir)
         {
@@ -30,17 +30,11 @@ public class PlacedObjectTypeSO : ScriptableObject
     public Transform visual;
     public int width;
     public int height;
-    public bool isHerb;
     public bool isPreObject;
     public List<Vector2Int> loadXZ;
     public List<Vector2Int> emptyXY;
 
     private List<Vector2Int> removeList;
-
-    //public bool needShadow;
-    //public bool needBlackSoil;
-    //public bool needSandySoil;
-    //public bool needDryLand;
 
     private void Awake()
     {

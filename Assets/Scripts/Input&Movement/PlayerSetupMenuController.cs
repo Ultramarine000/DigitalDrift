@@ -10,43 +10,23 @@ using UnityEngine.UI;
 
 public class PlayerSetupMenuController : MonoBehaviour
 {
-    [SerializeField]
-    private int PlayerIndex;
-
-    //[SerializeField]
-    //private TextMeshProUGUI titleText;
-    //[SerializeField]
-    //private Text titleSelectText;
-
-
-    [SerializeField]
-    private GameObject readyPanel;
-
-    [SerializeField]
-    private GameObject mapPanel;
-
-    [SerializeField]
-    private GameObject menuPanel;
-
-    [SerializeField]
-    private Button readyButton;
-
-    [SerializeField]
-    private Button firstMapButton;
-
-    [SerializeField]
-    public GameObject switchBtn,confirmBtn,quitBtn, rileyFrame,aprilFrame, riley, april,pickTitle,waitTitle,player1,player2;
-
-
+    [Header("State Data")]
+    [SerializeField] private int PlayerIndex;
     private float ignoreInputTime = 1f;
     private bool inputEnable;
 
+    [Header("Display Control")]
+    [SerializeField] private GameObject readyPanel;
+    [SerializeField] private GameObject mapPanel;
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private Button readyButton;
+    [SerializeField] private Button firstMapButton;
+    [SerializeField]
+    public GameObject switchBtn,confirmBtn,quitBtn, rileyFrame,aprilFrame, riley, april,pickTitle,waitTitle,player1,player2;
 
     public void SetPlayerIndex(int pi)
     {
         PlayerIndex = pi;
-        //title2Text = SetText("Player " + (pi + 1).ToString());
-        //titleSelectText.text = "Player " + (pi + 1).ToString();
 
         ignoreInputTime = Time.time + ignoreInputTime;
 
@@ -57,7 +37,6 @@ public class PlayerSetupMenuController : MonoBehaviour
         {
             player2.SetActive(true);
             switchBtn.SetActive(true);
-            //confirmBtn.GetComponent<Button>().Select();
             EventSystem.current.firstSelectedGameObject = switchBtn;
             confirmBtn.SetActive(true);
             quitBtn.SetActive(true);
@@ -85,21 +64,8 @@ public class PlayerSetupMenuController : MonoBehaviour
             inputEnable = true;
         }
         //Debug.Log(april.GetComponent<RectTransform>().position);
-
         //Debug.Log("Player " + PlayerIndex + ": " + EventSystem.current.currentSelectedGameObject);
     }
-
-    /*public void SetColor(Material color)
-    {
-        if(!inputEnable)
-        {
-            return;
-        }
-        PlayerConfigurationManager.Instance.SetPlayerColor(PlayerIndex, color);
-        readyPanel.SetActive(true);
-        readyButton.Select();
-        menuPanel.SetActive(false);
-    }*/
 
     public void SetCharacter(int modeIndex)
     {
@@ -151,7 +117,6 @@ public class PlayerSetupMenuController : MonoBehaviour
             mapPanel.SetActive(true);
             firstMapButton.Select();
 
-            //menuPanel.SetActive(false);
             switchBtn.SetActive(false);
             confirmBtn.SetActive(false);
             quitBtn.SetActive(false);
@@ -168,7 +133,7 @@ public class PlayerSetupMenuController : MonoBehaviour
             Vector3 s = rileyTrans.localScale;
             s.x *= -1;
             rileyTrans.localScale = s;
-
+            //pos set
             Vector3 p = rileyTrans.position;
             p.x -= 188.86f;
             rileyTrans.position = p;
@@ -184,7 +149,7 @@ public class PlayerSetupMenuController : MonoBehaviour
             Vector3 s = aprilTrans.localScale;
             s.x *= -1;
             aprilTrans.localScale = s;
-
+            //pos set
             Vector3 p = aprilTrans.position;
             p.x += 197.39f;
             aprilTrans.position = p;
@@ -230,7 +195,7 @@ public class PlayerSetupMenuController : MonoBehaviour
         PlayerConfigurationManager.Instance.ReadyPlayer(PlayerIndex);
         readyButton.gameObject.SetActive(false);
 
-        //Debug.Log(PlayerIndex + "is redy");
+        //Debug.Log(PlayerIndex + "is ready");
     }
     public void ContinueGame(int lastWinnerIndex)
     {

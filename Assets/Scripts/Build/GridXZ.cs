@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using CodeMonkey.Utils;
-//using Newtonsoft.Json;
 
 public class GridXZ<TGridObject>
 {
@@ -65,10 +63,6 @@ public class GridXZ<TGridObject>
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
 
-        /*OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) =>
-        {
-            DebugTextArray[eventArgs.x, eventArgs.z].text = GridArray[eventArgs.x, eventArgs.z]?.ToString();
-        };*/
     }
 
     /*public void SetDebugText(int x, int z, string text)
@@ -87,25 +81,10 @@ public class GridXZ<TGridObject>
         z = Mathf.FloorToInt((worldPosition - originPosition).z / CellSize);
     }
 
-    /*public void SetGridObject(int x, int z, TGridObject value)
-    {
-        if (x >= 0 && z >= 0 && x < Width && z < Height)
-        {
-            GridArray[x, z] = value;
-            TriggerGridObjectChanged(x, z);
-        }
-    }*/
-
     public void TriggerGridObjectChanged(int x, int z)
     {
         OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { x = x, z = z });
     }
-
-    /*public void SetGridObject(Vector3 worldPosition, TGridObject value)
-    {
-        GetXZ(worldPosition, out int x, out int z);
-        SetGridObject(x, z, value);
-    }*/
 
     public TGridObject GetGridObject(int x, int z)
     {
@@ -125,13 +104,5 @@ public class GridXZ<TGridObject>
         GetXZ(worldPosition, out x, out z);
         return GetGridObject(x, z);
     }
-
-    /*public Vector2Int ValidateGridPosition(Vector2Int gridPosition)
-    {
-        return new Vector2Int(
-            Mathf.Clamp(gridPosition.x, 0, Width - 1),
-            Mathf.Clamp(gridPosition.y, 0, Height - 1)
-        );
-    }*/
 
 }

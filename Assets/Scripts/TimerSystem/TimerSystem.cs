@@ -19,11 +19,11 @@ public class TimerSystem : MonoBehaviour
     private int curBlockNum = 0;
     void Start()
     {
-        Time.timeScale = 1;//游戏加速
+        Time.timeScale = 1;//game acceleration
 
-        // 创建计时器
+        // Create timer
         timer = Timer.createTimer("GameTime");
-        //开始计时
+        //start timer
         timer.startTiming(length, isCountdown, OnComplete, OnProcess);
     }
 
@@ -37,26 +37,27 @@ public class TimerSystem : MonoBehaviour
             timer.pauseTimer();
         }
         else
-            timer.connitueTimer();//继续
+            timer.connitueTimer();
+        //tests code:
         //if (Input.GetKeyDown(KeyCode.Alpha0))
         //{
         //    Debug.Log("Pause");
-        //    timer.pauseTimer();//暂停
+        //    timer.pauseTimer();
         //}
         //if (Input.GetKeyDown(KeyCode.Alpha9))
         //{
         //    Debug.Log("Resume");
-        //    timer.connitueTimer();//继续
+        //    timer.connitueTimer();
         //}
         //if (Input.GetKeyDown(KeyCode.Alpha8))
         //{
         //    Debug.Log("Restart");
-        //    timer.reStartTimer();//重新计时
+        //    timer.reStartTimer();
         //}
         //if (Input.GetKeyDown(KeyCode.Alpha7))
         //{
         //    Debug.Log("change length to ：20");
-        //    timer.changeTargetTime(20);//更改目标时间
+        //    timer.changeTargetTime(20);//change target time
         //}
         //if (Input.GetKeyDown(KeyCode.T))
         //{
@@ -72,7 +73,7 @@ public class TimerSystem : MonoBehaviour
         }
     }
 
-    // 计时结束的回调
+    // timer end callback
     void OnComplete()
     {
         string strOri = "Shutdown";
@@ -82,7 +83,7 @@ public class TimerSystem : MonoBehaviour
         GameController.GetInstance().GameOver();
     }
 
-    // 计时器的进程
+    // timer process
     void OnProcess(float p)
     {
         //string strOri = "Shutdown:\n";
@@ -93,9 +94,9 @@ public class TimerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 格式化时间
+    /// format time
     /// </summary>
-    /// <param name="seconds">秒</param>
+    /// <param name="seconds">s</param>
     /// <returns></returns>
     public static string FormatTime(float seconds)
     {

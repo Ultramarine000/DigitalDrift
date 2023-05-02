@@ -21,7 +21,6 @@ public class BatterySingle : MonoBehaviour
     {
         originalSize = batteryGreen.gameObject.GetComponent<RectTransform>().rect.width;
         originalPos = GetComponent<RectTransform>().anchoredPosition3D;
-        //Debug.Log("初始pic的宽度为：" + originalSize);
     }
 
 
