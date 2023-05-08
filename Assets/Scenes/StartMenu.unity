@@ -575,6 +575,19 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 0b4725e6a90443b40a10226331442752, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Cheering
+    clip: {fileID: 8300000, guid: 8b6ddc6b570efa64d8ed5238a1436107, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  TimeRunningOut: 0
 --- !u!4 &960711456
 Transform:
   m_ObjectHideFlags: 0

@@ -115,6 +115,9 @@ public class GameController : MonoBehaviour
     {
         Destroy(PlayerConfigurationManager.GetInstance().gameObject);
         SceneManager.LoadScene("StartMenu");
+        FindObjectOfType<AudioManager>().StopPlaying("LevelMusic");
+        FindObjectOfType<AudioManager>().Play("MainMenuTheme");
+        FindObjectOfType<AudioManager>().StopPlaying("ComputingAmbienceSFX");
     }
     public void QuitBtn()
     {
@@ -132,6 +135,8 @@ public class GameController : MonoBehaviour
         finishText.text = "Game Over - You failed";
         finishPanel.SetActive(true);
         finishBackMenuBtn.Select();
+        FindObjectOfType<AudioManager>().StopPlaying("LevelMusic");
+        FindObjectOfType<AudioManager>().Play("GameOver");
     }
 
     public void LevelFinished()
@@ -142,7 +147,9 @@ public class GameController : MonoBehaviour
         gameObject.GetComponentInChildren<Mover3D>().enabled = false;
         finishText.text = "Level-1 Compete";
         finishPanel.SetActive(true);
-        finishBackMenuBtn.Select();        
+        finishBackMenuBtn.Select();
+        FindObjectOfType<AudioManager>().StopPlaying("LevelMusic");
+        FindObjectOfType<AudioManager>().Play("Cheering");
     }
     public void Reborn()
     {
